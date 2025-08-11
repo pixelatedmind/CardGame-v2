@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Warm Paper Background */
+.paper-bg {
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(255, 248, 235, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 245, 225, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(255, 250, 240, 0.2) 0%, transparent 50%),
+    linear-gradient(135deg, #faf8f3 0%, #f5f2ed 25%, #f8f5f0 50%, #f3f0eb 75%, #f6f3ee 100%);
+  position: relative;
+}
+
+.paper-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(210, 180, 140, 0.03) 0%, transparent 2%),
+    radial-gradient(circle at 75% 75%, rgba(222, 184, 135, 0.03) 0%, transparent 2%),
+    radial-gradient(circle at 50% 10%, rgba(205, 175, 135, 0.02) 0%, transparent 3%),
+    radial-gradient(circle at 10% 90%, rgba(218, 188, 148, 0.02) 0%, transparent 3%),
+    radial-gradient(circle at 90% 50%, rgba(200, 170, 130, 0.02) 0%, transparent 2%);
+  background-size: 200px 200px, 300px 300px, 250px 250px, 180px 180px, 220px 220px;
+  background-position: 0 0, 100px 100px, 50px 150px, 200px 50px, 150px 200px;
+  pointer-events: none;
+}
+
+.paper-bg::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(90deg, transparent 0%, rgba(255, 248, 235, 0.1) 50%, transparent 100%),
+    linear-gradient(0deg, transparent 0%, rgba(255, 245, 225, 0.1) 50%, transparent 100%);
+  background-size: 400px 100%, 100% 400px;
+  animation: paperShimmer 20s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes paperShimmer {
+  0%, 100% {
+    opacity: 0.3;
+    transform: translateX(-50px) translateY(-50px);
+  }
+  50% {
+    opacity: 0.6;
+    transform: translateX(50px) translateY(50px);
+  }
+}
+
+/* Rainbow Button Animation */
+.rainbow-btn {
+  position: relative;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 12px;
+  box-sizing: border-box;
+  display: inline-flex;
+  z-index: 2;
+  overflow: hidden;
+  padding: 3px;
+  align-items: center;
+  justify-content: center;
+  background: #374151;
+  transition: all 0.3s ease;
+}
+
+.rainbow-btn:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(115deg, #4fcf70, #fad648, #a767e5, #12bcfe, #44ce7b);
+  background-size: 50% 100%;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.rainbow-btn.animating:before {
+  opacity: 1;
+  animation: rainbow-btn 0.375s linear infinite;
+}
+
+.rainbow-btn span {
+  position: relative;
+  z-index: 2;
+  background: #1f2937;
+  border-radius: 9px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  font-weight: 600;
+  gap: 0.5rem;
+  transition: background 0.3s ease;
+}
+
+.rainbow-btn.animating span {
+  background: #000;
+}
+
+.rainbow-btn:hover:not(.animating) {
+  background: #4b5563;
+}
+
+.rainbow-btn:hover:not(.animating) span {
+  background: #374151;
+}
+
+@keyframes rainbow-btn {
+  to {
+    transform: translateX(-50%);
+  }
+}

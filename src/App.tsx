@@ -1,0 +1,435 @@
+import React, { useState, useCallback, useEffect } from 'react';
+import { RefreshCw, History, Zap } from 'lucide-react';
+import QRCodeSticker from './components/QRCodeSticker';
+
+// Helper function to get dynamic text size based on word length
+const getDynamicTextSize = (word: string) => {
+  const length = word.length;
+  if (length > 20) {
+    return 'text-[20px] sm:text-[22px] md:text-[24px] lg:text-[32px]';
+  } else if (length > 15) {
+    return 'text-[24px] sm:text-[26px] md:text-[28px] lg:text-[36px]';
+  } else if (length > 10) {
+    return 'text-[28px] sm:text-[30px] md:text-[32px] lg:text-[40px]';
+  } else {
+    return 'text-[32px] sm:text-[34px] md:text-[36px] lg:text-[44px]';
+  }
+};
+
+// Types
+interface WordCategory {
+  id: string;
+  label: string;
+  description: string;
+  words: string[];
+}
+
+// Parse CSV function
+const parseCSV = (csvText: string): Record<string, string[]> => {
+  console.log('Parsing CSV...');
+  const lines = csvText.trim().split('\n').filter(line => line.trim() !== '');
+  console.log('Number of lines:', lines.length);
+  
+  if (lines.length === 0) {
+    console.error('No lines found in CSV');
+    return {};
+  }
+  
+  const headers = lines[0].split(',');
+  const trimmedHeaders = headers.map(header => header.trim());
+  console.log('Headers:', headers);
+  console.log('Trimmed headers:', trimmedHeaders);
+  const categoryIndex = headers.indexOf('category');
+  const wordIndex = trimmedHeaders.indexOf('word');
+  console.log('Category index:', categoryIndex, 'Word index:', wordIndex);
+  
+  if (categoryIndex === -1 || wordIndex === -1) {
+    console.error('Required columns not found. Category index:', categoryIndex, 'Word index:', wordIndex);
+    return {};
+  }
+  
+  const categories: Record<string, string[]> = {};
+  
+  for (let i = 1; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (!line) continue;
+    
+    const values = line.split(',').map(val => val.trim());
+    if (i <= 5) { // Log first few lines for debugging
+      console.log(`Line ${i}:`, values);
+    }
+    
+    if (values.length <= Math.max(categoryIndex, wordIndex)) {
+      console.warn(`Line ${i} has insufficient columns:`, values);
+      continue;
+    }
+    
+    const category = values[categoryIndex];
+    const word = values[wordIndex];
+    
+    if (!category || !word) {
+      console.warn(`Line ${i} has empty category or word:`, { category, word });
+      continue;
+    }
+    
+    if (!categories[category]) {
+      categories[category] = [];
+    }
+    categories[category].push(word);
+  }
+  
+  console.log('Final parsed categories:', categories);
+  console.log('Category counts:', Object.keys(categories).map(key => `${key}: ${categories[key].length}`));
+  return categories;
+};
+
+function App() {
+  const [wordCategories, setWordCategories] = useState<Record<string, WordCategory>>({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [currentWords, setCurrentWords] = useState({
+    future: 'Loading...',
+    thing: 'Loading...',
+    theme: 'Loading...'
+  });
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [showPastPrompts, setShowPastPrompts] = useState(false);
+  const [pastPrompts, setPastPrompts] = useState<Array<{
+    id: string;
+    future: string;
+    thing: string;
+    theme: string;
+    timestamp: Date;
+  }>>([]);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  // Load words from CSV data
+  useEffect(() => {
+    const loadWords = async () => {
+      console.log('Starting to load words from public/words.csv...');
+      try {
+        const response = await fetch('/words.csv');
+        
+        if (!response.ok) {
+          throw new Error(`Failed to fetch CSV file: ${response.status} ${response.statusText}`);
+        }
+        
+        const csvData = await response.text();
+        console.log('CSV data length:', csvData.length);
+        console.log('First 200 characters of CSV:', csvData.substring(0, 200));
+        
+        if (!csvData || csvData.length === 0) {
+          throw new Error('Empty CSV response');
+        }
+        
+        const parsedCategories = parseCSV(csvData);
+        console.log('Parsed categories:', parsedCategories);
+        
+        if (Object.keys(parsedCategories).length === 0) {
+          throw new Error('No categories parsed from CSV');
+        }
+        
+        const categories: Record<string, WordCategory> = {
+          future: {
+            id: 'future',
+            label: 'Energy Future',
+            description: 'In a [WORD] energy future',
+            words: parsedCategories.future || []
+          },
+          thing: {
+            id: 'thing',
+            label: 'Solution',
+            description: 'There is a [WORD]',
+            words: parsedCategories.thing || []
+          },
+          theme: {
+            id: 'theme',
+            label: 'Focus Area',
+            description: 'Related to [WORD]',
+            words: parsedCategories.theme || []
+          }
+        };
+        
+        // Validate that we have words for each category
+        Object.keys(categories).forEach(key => {
+          console.log(`Category ${key} has ${categories[key].words.length} words`);
+        });
+        
+        setWordCategories(categories);
+        console.log('Word categories set successfully');
+        setIsLoading(false);
+        
+        // Generate random initial words
+        const initialWords = {
+          future: categories.future.words[Math.floor(Math.random() * categories.future.words.length)],
+          thing: categories.thing.words[Math.floor(Math.random() * categories.thing.words.length)],
+          theme: categories.theme.words[Math.floor(Math.random() * categories.theme.words.length)]
+        };
+        setCurrentWords(initialWords);
+      } catch (error) {
+        console.error('Error loading words:', error);
+        setIsLoading(false);
+      }
+    };
+    
+    loadWords();
+  }, []);
+
+
+  const getRandomWord = useCallback((category: keyof typeof wordCategories): string => {
+    const words = wordCategories[category]?.words || [];
+    console.log(`Getting random word for category ${category}, available words:`, words.length);
+    if (words.length === 0) return 'Loading...';
+    const randomIndex = Math.floor(Math.random() * words.length);
+    const selectedWord = words[randomIndex];
+    console.log(`Selected word for ${category}:`, selectedWord);
+    return selectedWord;
+  }, [wordCategories]);
+
+  const generateWord = useCallback(async (category: keyof typeof wordCategories) => {
+    setIsGenerating(true);
+    
+    // Add slight delay for better UX
+    await new Promise(resolve => setTimeout(resolve, 150));
+    
+    const newWord = getRandomWord(category);
+    setCurrentWords(prev => ({
+      ...prev,
+      [category]: newWord
+    }));
+    setIsGenerating(false);
+  }, [getRandomWord]);
+
+  const generateAllWords = useCallback(async () => {
+    // Start animation
+    setIsAnimating(true);
+    
+    // Wait for animation to complete (0.75 seconds)
+    await new Promise(resolve => setTimeout(resolve, 750));
+    
+    setIsGenerating(true);
+
+    // Add small delay after button animation ends
+    await new Promise(resolve => setTimeout(resolve, 200));
+    const newWords = {
+      future: getRandomWord('future'),
+      thing: getRandomWord('thing'),
+      theme: getRandomWord('theme')
+    };
+
+    setCurrentWords(newWords);
+    setIsGenerating(false);
+    
+    // Add to past prompts if all words are valid
+    if (newWords.future && newWords.thing && newWords.theme) {
+      const newPrompt = {
+        id: Date.now().toString(),
+        future: newWords.future,
+        thing: newWords.thing,
+        theme: newWords.theme,
+        timestamp: new Date()
+      };
+      setPastPrompts(prev => [newPrompt, ...prev.slice(0, 9)]); // Keep last 10
+    }
+    
+    // Stop animation immediately after words appear
+    setTimeout(() => {
+      setIsAnimating(false);
+    }, 100);
+  }, [getRandomWord]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
+        <div className="text-center">
+          <RefreshCw className="w-8 h-8 text-indigo-600 animate-spin mx-auto mb-4" />
+          <p className="text-lg text-gray-600">Loading words...</p>
+          <p className="text-sm text-gray-500 mt-2">Check console for details</p>
+        </div>
+      </div>
+    );
+  }
+  
+  // Show error state if no categories loaded
+  if (Object.keys(wordCategories).length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-red-500 mb-4">
+            <svg className="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+            </svg>
+          </div>
+          <p className="text-lg text-gray-600 mb-2">Failed to load words</p>
+          <p className="text-sm text-gray-500 mb-4">Check console for error details</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-colors"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen paper-bg p-1 sm:p-4 lg:p-8 relative">
+      
+      <div className="max-w-6xl mx-auto">
+        <div className="relative z-10">
+        
+        {/* Logo Header */}
+        <div className="text-center mb-4 sm:mb-8 p-4 sm:p-6">
+          <div 
+            className="flex items-center justify-center gap-2 sm:gap-3 mb-1"
+          >
+            <Zap className="w-6 sm:w-8 h-6 sm:h-8 text-amber-600" />
+            <h1 className="text-xl sm:text-4xl font-bold text-black">
+              Things from the future
+            </h1>
+            <Zap className="w-6 sm:w-8 h-6 sm:h-8 text-orange-600" />
+          </div>
+          
+        </div>
+        
+        {/* Main Card Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-4 sm:mb-8 landscape:grid-cols-3 landscape:gap-3">
+          
+          {/* Left Card - Future */}
+          <div className="bg-gradient-to-br from-green-400 to-green-500 rounded-xl sm:rounded-3xl p-3 sm:p-8 text-white shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105 cursor-pointer"
+               >
+            <div className="h-full flex flex-col min-h-[160px] sm:min-h-[250px] md:min-h-[350px] lg:min-h-[600px] xl:min-h-[700px] landscape:min-h-[140px] text-center">
+              <div className="flex-1 flex flex-col">
+                <div className="text-2xl sm:text-3xl md:text-3xl lg:text-8xl xl:text-12xl landscape:text-2xl font-medium opacity-90 mb-2 sm:mb-4 md:mb-4 lg:mb-8 landscape:mb-1">In a</div>
+                <div className="bg-white rounded-lg sm:rounded-2xl p-3 sm:p-6 md:p-4 lg:p-8 flex-1 flex items-center justify-center landscape:p-4 shadow-lg mb-2 sm:mb-6 md:mb-4 lg:mb-16 landscape:mb-2 mt-2 sm:mt-6 md:mt-4 lg:mt-16 landscape:mt-2">
+                  <div className={`${getDynamicTextSize(currentWords.future)} font-bold text-green-500 leading-tight break-words`}>
+                    {currentWords.future}
+                  </div>
+                </div>
+                <div className="text-2xl sm:text-3xl md:text-3xl lg:text-8xl xl:text-12xl landscape:text-2xl font-medium opacity-90">future</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Middle Card - Thing */}
+          <div className="bg-gradient-to-br from-red-400 to-red-500 rounded-xl sm:rounded-3xl p-3 sm:p-8 text-white shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105 cursor-pointer"
+               >
+            <div className="h-full flex flex-col min-h-[160px] sm:min-h-[250px] md:min-h-[350px] lg:min-h-[600px] xl:min-h-[700px] landscape:min-h-[140px] text-center">
+              <div className="flex-1 flex flex-col">
+                <div className="text-2xl sm:text-3xl md:text-3xl lg:text-8xl xl:text-12xl landscape:text-2xl font-medium opacity-90 mb-2 sm:mb-4 md:mb-4 lg:mb-8 landscape:mb-1">there is a</div>
+                <div className="bg-white rounded-lg sm:rounded-2xl p-3 sm:p-6 md:p-4 lg:p-8 flex-1 flex items-center justify-center landscape:p-4 shadow-lg mb-2 sm:mb-6 md:mb-4 lg:mb-16 landscape:mb-2 mt-2 sm:mt-6 md:mt-4 lg:mt-16 landscape:mt-2">
+                  <div className={`${getDynamicTextSize(currentWords.thing)} font-bold text-red-500 leading-tight break-words`}>
+                    {currentWords.thing}
+                  </div>
+                </div>
+                <div className="text-2xl sm:text-3xl md:text-3xl lg:text-8xl xl:text-12xl landscape:text-2xl font-medium opacity-90 invisible">placeholder</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Card - Theme */}
+          <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl sm:rounded-3xl p-3 sm:p-8 text-white shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105 cursor-pointer"
+               >
+            <div className="h-full flex flex-col min-h-[160px] sm:min-h-[250px] md:min-h-[350px] lg:min-h-[600px] xl:min-h-[700px] landscape:min-h-[140px] text-center">
+              <div className="flex-1 flex flex-col">
+                <div className="text-2xl sm:text-3xl md:text-3xl lg:text-8xl xl:text-12xl landscape:text-2xl font-medium opacity-90 mb-2 sm:mb-4 md:mb-4 lg:mb-8 landscape:mb-1">related to</div>
+                <div className="bg-white rounded-lg sm:rounded-2xl p-3 sm:p-6 md:p-4 lg:p-8 flex-1 flex items-center justify-center landscape:p-4 shadow-lg mb-2 sm:mb-6 md:mb-4 lg:mb-16 landscape:mb-2 mt-2 sm:mt-6 md:mt-4 lg:mt-16 landscape:mt-2">
+                  <div className={`${getDynamicTextSize(currentWords.theme)} font-bold text-blue-500 leading-tight break-words ${isAnimating ? 'animate-pop-in' : ''}`}>
+                    {currentWords.theme}
+                  </div>
+                </div>
+                <div className="text-2xl sm:text-3xl md:text-3xl lg:text-8xl xl:text-12xl landscape:text-2xl font-medium opacity-90">what is it?</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center items-center mb-4 sm:mb-8 landscape:flex-row landscape:gap-2 px-4">
+          {/* Generate Button - Only shown on larger screens */}
+          <button
+            onClick={generateAllWords}
+            disabled={isGenerating}
+            className={`hidden lg:flex rainbow-btn ${isAnimating ? 'animating' : ''} disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none text-sm sm:text-base landscape:text-sm`}
+            style={{ height: '60px', minWidth: '180px' }}
+          >
+            <span className="px-6 sm:px-8 py-3 sm:py-4 landscape:px-3 landscape:py-2">
+              <RefreshCw className={`w-4 sm:w-5 h-4 sm:h-5 ${isGenerating ? 'animate-spin' : ''} inline mr-2`} />
+              Generate
+            </span>
+          </button>
+          
+          <button
+            onClick={() => setShowPastPrompts(!showPastPrompts)}
+            className="bg-white hover:bg-gray-50 text-gray-700 px-6 sm:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl font-semibold transition-all duration-300 flex items-center gap-2 sm:gap-3 shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 border border-gray-200 text-sm sm:text-base landscape:px-3 landscape:py-2 landscape:text-sm"
+          >
+            <History className="w-4 sm:w-5 h-4 sm:h-5" />
+            {showPastPrompts ? 'Hide History' : 'Past Prompts'}
+          </button>
+        </div>
+
+        {/* Past Prompts Box */}
+        {showPastPrompts && (
+          <div className="bg-white rounded-3xl shadow-xl border border-gray-200 overflow-hidden">
+            <div className="p-6 border-b border-gray-200">
+              <h2 className="text-xl font-bold text-gray-800 flex items-center gap-3">
+                <History className="w-5 h-5 text-amber-600" />
+                Past Prompts
+              </h2>
+            </div>
+            
+            <div className="p-6">
+              {pastPrompts.length === 0 ? (
+                <div className="text-center py-8">
+                  <History className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+                  <h3 className="text-lg font-semibold text-gray-600 mb-2">No Past Prompts Yet</h3>
+                  <p className="text-gray-500">Generate some prompts to see your history here!</p>
+                </div>
+              ) : (
+                <div className="grid gap-3 max-h-80 overflow-y-auto">
+                  {pastPrompts.map((prompt) => (
+                    <div 
+                      key={prompt.id} 
+                      className="bg-gray-50 rounded-xl p-4 hover:bg-gray-100 transition-colors cursor-pointer border border-gray-100 hover:border-gray-200"
+                      onClick={() => {
+                        setCurrentWords({
+                          future: prompt.future,
+                          thing: prompt.thing,
+                          theme: prompt.theme
+                        });
+                      }}
+                    >
+                      <div className="text-base leading-relaxed mb-2 flex flex-wrap items-center gap-1">
+                        <span className="text-gray-700">In a </span>
+                        <span className="bg-green-500 text-white px-2 py-1 rounded-lg font-semibold text-sm">
+                          {prompt.future}
+                        </span>
+                        <span className="text-gray-700"> future, there is a </span>
+                        <span className="bg-red-500 text-white px-2 py-1 rounded-lg font-semibold text-sm">
+                          {prompt.thing}
+                        </span>
+                        <span className="text-gray-700"> related to </span>
+                        <span className="bg-blue-500 text-white px-2 py-1 rounded-lg font-semibold text-sm">
+                          {prompt.theme}
+                        </span>
+                        <span className="text-gray-700">.</span>
+                      </div>
+                      <div className="text-xs text-gray-500">
+                        {prompt.timestamp.toLocaleDateString()} at {prompt.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+      </div>
+      </div>
+    </div>
+  );
+}
+
+export default App;
