@@ -103,6 +103,11 @@ function App() {
   }>>([]);
   const [isAnimating, setIsAnimating] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [shownWords, setShownWords] = useState<Record<string, string[]>>({
+    future: [],
+    thing: [],
+    theme: []
+  });
 
   // Load words from CSV data
   useEffect(() => {
@@ -167,6 +172,13 @@ function App() {
           theme: categories.theme.words[Math.floor(Math.random() * categories.theme.words.length)]
         };
         setCurrentWords(initialWords);
+        
+        // Initialize shown words with the initial words
+        setShownWords({
+          future: [initialWords.future],
+          thing: [initialWords.thing],
+          theme: [initialWords.theme]
+        });
       } catch (error) {
         console.error('Error loading words:', error);
         setIsLoading(false);
@@ -177,15 +189,48 @@ function App() {
   }, []);
 
 
-  const getRandomWord = useCallback((category: keyof typeof wordCategories): string => {
+  const getRandomWord = useCallback((category: keyof typeof wordCategories, excludedWords: string[] = []): string => {
     const words = wordCategories[category]?.words || [];
     console.log(`Getting random word for category ${category}, available words:`, words.length);
     if (words.length === 0) return 'Loading...';
-    const randomIndex = Math.floor(Math.random() * words.length);
-    const selectedWord = words[randomIndex];
+    
+    // Filter out excluded words
+    const availableWords = words.filter(word => !excludedWords.includes(word));
+    
+    // If no words available after filtering, fall back to full list (reset cycle)
+    const wordsToUse = availableWords.length > 0 ? availableWords : words;
+    
+    const randomIndex = Math.floor(Math.random() * wordsToUse.length);
+    const selectedWord = wordsToUse[randomIndex];
     console.log(`Selected word for ${category}:`, selectedWord);
     return selectedWord;
   }, [wordCategories]);
+
+  const handleCardDoubleClick = useCallback(async (category: keyof typeof wordCategories) => {
+    setIsGenerating(true);
+    
+    // Add slight delay for better UX
+    await new Promise(resolve => setTimeout(resolve, 150));
+    
+    const currentShownWords = shownWords[category];
+    const newWord = getRandomWord(category, currentShownWords);
+    
+    setCurrentWords(prev => ({
+      ...prev,
+      [category]: newWord
+    }));
+    
+    // Update shown words - if we got a word that was already shown, reset the cycle
+    setShownWords(prev => {
+      const wasAlreadyShown = currentShownWords.includes(newWord);
+      return {
+        ...prev,
+        [category]: wasAlreadyShown ? [newWord] : [...currentShownWords, newWord]
+      };
+    });
+    
+    setIsGenerating(false);
+  }, [getRandomWord, shownWords]);
 
   const generateWord = useCallback(async (category: keyof typeof wordCategories) => {
     setIsGenerating(true);
@@ -212,13 +257,29 @@ function App() {
 
     // Add small delay after button animation ends
     await new Promise(resolve => setTimeout(resolve, 200));
+    
+    // Generate new words excluding currently shown ones
     const newWords = {
-      future: getRandomWord('future', currentWords.future),
-      thing: getRandomWord('thing', currentWords.thing),
-      theme: getRandomWord('theme', currentWords.theme)
+      future: getRandomWord('future', shownWords.future),
+      thing: getRandomWord('thing', shownWords.thing),
+      theme: getRandomWord('theme', shownWords.theme)
     };
 
     setCurrentWords(newWords);
+    
+    // Update shown words for each category
+    setShownWords(prev => {
+      const updated = { ...prev };
+      Object.keys(newWords).forEach(category => {
+        const cat = category as keyof typeof newWords;
+        const newWord = newWords[cat];
+        const currentShownForCategory = prev[cat];
+        const wasAlreadyShown = currentShownForCategory.includes(newWord);
+        updated[cat] = wasAlreadyShown ? [newWord] : [...currentShownForCategory, newWord];
+      });
+      return updated;
+    });
+    
     setIsGenerating(false);
     
     // Add to past prompts if all words are valid
@@ -336,7 +397,7 @@ function App() {
           
           {/* Left Card - Future */}
           <div className="bg-gradient-to-br from-green-400 to-green-500 rounded-xl sm:rounded-3xl p-3 sm:p-8 text-white shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105 cursor-pointer"
-               >
+               onDoubleClick={() => handleCardDoubleClick('future')}>
             <div className="h-full flex flex-col min-h-[160px] sm:min-h-[250px] md:min-h-[350px] lg:min-h-[600px] xl:min-h-[700px] landscape:min-h-[140px] text-center">
               <div className="flex-1 flex flex-col">
                 <div className="text-2xl sm:text-3xl md:text-3xl lg:text-8xl xl:text-12xl landscape:text-2xl font-medium opacity-90 mb-2 sm:mb-4 md:mb-4 lg:mb-8 landscape:mb-1">In a</div>
@@ -352,7 +413,7 @@ function App() {
 
           {/* Middle Card - Thing */}
           <div className="bg-gradient-to-br from-red-400 to-red-500 rounded-xl sm:rounded-3xl p-3 sm:p-8 text-white shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105 cursor-pointer"
-               >
+               onDoubleClick={() => handleCardDoubleClick('thing')}>
             <div className="h-full flex flex-col min-h-[160px] sm:min-h-[250px] md:min-h-[350px] lg:min-h-[600px] xl:min-h-[700px] landscape:min-h-[140px] text-center">
               <div className="flex-1 flex flex-col">
                 <div className="text-2xl sm:text-3xl md:text-3xl lg:text-8xl xl:text-12xl landscape:text-2xl font-medium opacity-90 mb-2 sm:mb-4 md:mb-4 lg:mb-8 landscape:mb-1">there is a</div>
@@ -368,7 +429,7 @@ function App() {
 
           {/* Right Card - Theme */}
           <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl sm:rounded-3xl p-3 sm:p-8 text-white shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105 cursor-pointer"
-               >
+               onDoubleClick={() => handleCardDoubleClick('theme')}>
             <div className="h-full flex flex-col min-h-[160px] sm:min-h-[250px] md:min-h-[350px] lg:min-h-[600px] xl:min-h-[700px] landscape:min-h-[140px] text-center">
               <div className="flex-1 flex flex-col">
                 <div className="text-2xl sm:text-3xl md:text-3xl lg:text-8xl xl:text-12xl landscape:text-2xl font-medium opacity-90 mb-2 sm:mb-4 md:mb-4 lg:mb-8 landscape:mb-1">related to</div>
