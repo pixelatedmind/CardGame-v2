@@ -365,63 +365,6 @@ const SettingsPage: React.FC<SettingsPageProps> = ({
       </div>
     </div>
   );
-
-  // Helper functions
-  function exportWords() {
-    const csvContent = 'category,word\n' + 
-      wordEntries.map(entry => `${entry.category},${entry.word}`).join('\n');
-    
-    const blob = new Blob([csvContent], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'words.csv';
-    a.click();
-    URL.revokeObjectURL(url);
-  }
-
-  function importWords(event: React.ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const csvContent = e.target?.result as string;
-        const lines = csvContent.trim().split('\n');
-        const headers = lines[0].split(',');
-        
-        const categoryIndex = headers.findIndex(h => h.trim().toLowerCase() === 'category');
-        const wordIndex = headers.findIndex(h => h.trim().toLowerCase() === 'word');
-        
-        if (categoryIndex !== -1 && wordIndex !== -1) {
-          const newEntries: WordEntry[] = [];
-          
-          for (let i = 1; i < lines.length; i++) {
-            const values = lines[i].split(',');
-            const category = values[categoryIndex]?.trim().toLowerCase();
-            const word = values[wordIndex]?.trim();
-            
-            if (word && ['future', 'thing', 'theme'].includes(category)) {
-              newEntries.push({
-                id: `imported-${i}`,
-                word: word.toUpperCase(),
-                category: category as 'future' | 'thing' | 'theme'
-              });
-            }
-          }
-          
-          setWordEntries(newEntries);
-          setHasUnsavedChanges(true);
-        }
-      };
-      reader.readAsText(file);
-    }
-  }
-
-  function resetToDefaults() {
-    if (confirm('Are you sure you want to reset to default words? This will remove all custom words.')) {
-      window.location.reload();
-    }
-  }
 };
 
 export default SettingsPage;</parameter>
