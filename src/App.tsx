@@ -25,87 +25,38 @@ interface WordCategory {
   words: string[];
 }
 
-// Parse CSV function
-const parseCSV = (csvText: string): Record<string, string[]> => {
-  console.log('Parsing CSV...');
-  console.log('Raw CSV text (first 500 chars):', csvText.substring(0, 500));
-  const lines = csvText.trim().split('\n').filter(line => line.trim() !== '');
-  console.log('Number of lines:', lines.length);
+// Parse JSON function
+const parseJSON = (jsonData: any[]): Record<string, string[]> => {
+  console.log('Parsing JSON...');
+  console.log('JSON data length:', jsonData.length);
   
-  if (lines.length === 0) {
-    console.error('No lines found in CSV');
-    return {};
-  }
-  
-  // Debug the first line to see exact content
-  console.log('First line raw:', JSON.stringify(lines[0]));
-  
-  const headers = lines[0].split(',').map(header => header.trim());
-  console.log('Headers after split and trim:', headers);
-  
-  // Find column indices using explicit loop for better debugging
-  let categoryIndex = -1;
-  let wordIndex = -1;
-  
-  for (let i = 0; i < headers.length; i++) {
-    const header = headers[i].toLowerCase();
-    console.log(`Header ${i}: "${header}"`);
-    if (header === 'category') {
-      categoryIndex = i;
-      console.log('Found category at index:', i);
-    }
-    if (header === 'word') {
-      wordIndex = i;
-      console.log('Found word at index:', i);
-    }
-  }
-  
-  console.log('Final indices - Category:', categoryIndex, 'Word:', wordIndex);
-  
-  if (categoryIndex === -1 || wordIndex === -1) {
-    console.error('Required columns not found!');
-    console.error('Available headers:', headers);
-    console.error('Looking for: "word" and "category" (case insensitive)');
-    console.error('Category index:', categoryIndex, 'Word index:', wordIndex);
+  if (!Array.isArray(jsonData) || jsonData.length === 0) {
+    console.error('Invalid JSON data - expected non-empty array');
     return {};
   }
   
   const categories: Record<string, string[]> = {};
   
-  for (let i = 1; i < lines.length; i++) {
-    const line = lines[i].trim();
-    if (!line) continue;
-    
-    // Handle potential commas within quoted values
-    const values = line.split(',').map(val => val.trim().replace(/^"(.*)"$/, '$1'));
-    if (i <= 5) { // Log first few lines for debugging
-      console.log(`Line ${i}:`, values);
+  jsonData.forEach((item, index) => {
+    if (!item.Word || !item.Category) {
+      console.warn(`Item ${index} missing Word or Category:`, item);
+      return;
     }
     
-    if (values.length <= Math.max(categoryIndex, wordIndex)) {
-      console.warn(`Line ${i} has insufficient columns:`, values);
-      continue;
-    }
-    
-    const category = values[categoryIndex].toLowerCase();
-    const word = values[wordIndex].toUpperCase();
-    
-    if (!category || !word) {
-      console.warn(`Line ${i} has empty category or word:`, { category, word });
-      continue;
-    }
+    const category = item.Category.toLowerCase();
+    const word = item.Word.toUpperCase();
     
     // Only accept valid categories
     if (!['future', 'thing', 'theme'].includes(category)) {
-      console.warn(`Line ${i} has invalid category:`, category);
-      continue;
+      console.warn(`Item ${index} has invalid category:`, category);
+      return;
     }
     
     if (!categories[category]) {
       categories[category] = [];
     }
     categories[category].push(word);
-  }
+  });
   
   console.log('Final parsed categories:', categories);
   console.log('Category counts:', Object.keys(categories).map(key => `${key}: ${categories[key].length}`));
@@ -142,27 +93,26 @@ function App() {
   // Load words from CSV data
   useEffect(() => {
     const loadWords = async () => {
-      console.log('Starting to load words from public/words.csv/Things-DB-app.csv...');
+      console.log('Starting to load words from public/Things-DB-app.json...');
       try {
-        const response = await fetch('/words.csv/Things-DB-app.csv');
+        const response = await fetch('/Things-DB-app.json');
         
         if (!response.ok) {
-          throw new Error(`Failed to fetch CSV file: ${response.status} ${response.statusText}`);
+          throw new Error(`Failed to fetch JSON file: ${response.status} ${response.statusText}`);
         }
         
-        const csvData = await response.text();
-        console.log('CSV data length:', csvData.length);
-        console.log('First 200 characters of CSV:', csvData.substring(0, 200));
+        const jsonData = await response.json();
+        console.log('JSON data loaded, items count:', jsonData.length);
         
-        if (!csvData || csvData.length === 0) {
-          throw new Error('Empty CSV response');
+        if (!jsonData || jsonData.length === 0) {
+          throw new Error('Empty JSON response');
         }
         
-        const parsedCategories = parseCSV(csvData);
+        const parsedCategories = parseJSON(jsonData);
         console.log('Parsed categories:', parsedCategories);
         
         if (Object.keys(parsedCategories).length === 0) {
-          throw new Error('No categories parsed from CSV');
+          throw new Error('No categories parsed from JSON');
         }
         
         // Store default words data
