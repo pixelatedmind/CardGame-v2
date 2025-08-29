@@ -38,7 +38,7 @@ const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose, shareUrl }) =>
             <img 
               src="/QR-Game.svg" 
               alt="QR Code for Things from the Future app"
-              className="w-[700px] h-[550px] max-w-full border border-gray-200 rounded-lg shadow-sm"
+              className="w-[500px] max-w-full border border-gray-200 rounded-lg shadow-sm"
             />
           </div>
 
