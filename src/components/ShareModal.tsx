@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { X, Share2, Copy } from 'lucide-react';
-import QRCode from 'qrcode.js';
+import * as QRCode from 'qrcode.js';
 
 interface ShareModalProps {
   isOpen: boolean;
