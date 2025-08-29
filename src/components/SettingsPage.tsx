@@ -180,29 +180,87 @@ const SettingsPage: React.FC<SettingsPageProps> = ({
               </div>
             </div>
 
-            {/* Word List */}
+            {/* Word List - 3 Columns by Category */}
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-gray-800">Current Words</h3>
-              <div className="grid gap-2">
-                {wordEntries.map((entry) => (
-                  <div key={entry.id} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                    <span className={`px-2 py-1 rounded text-xs font-medium border ${getCategoryColor(entry.category)}`}>
-                      {entry.category}
-                    </span>
-                    <input
-                      type="text"
-                      value={entry.word}
-                      onChange={(e) => updateWord(entry.id, e.target.value)}
-                      className="flex-1 px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-indigo-500"
-                    />
-                    <button
-                      onClick={() => removeWord(entry.id)}
-                      className="p-1 text-red-500 hover:bg-red-100 rounded transition-colors"
-                    >
-                      <Minus className="w-4 h-4" />
-                    </button>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* Future Words Column */}
+                <div className="space-y-2">
+                  <h4 className="text-md font-semibold text-green-700 flex items-center gap-2">
+                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                    Future ({wordEntries.filter(e => e.category === 'future').length})
+                  </h4>
+                  <div className="space-y-2">
+                    {wordEntries.filter(entry => entry.category === 'future').map((entry) => (
+                      <div key={entry.id} className="flex items-center gap-2 p-2 bg-green-50 rounded-lg hover:bg-green-100 transition-colors border border-green-200">
+                        <input
+                          type="text"
+                          value={entry.word}
+                          onChange={(e) => updateWord(entry.id, e.target.value)}
+                          className="flex-1 px-2 py-1 border border-green-300 rounded focus:outline-none focus:ring-1 focus:ring-green-500 text-sm"
+                        />
+                        <button
+                          onClick={() => removeWord(entry.id)}
+                          className="p-1 text-red-500 hover:bg-red-100 rounded transition-colors"
+                        >
+                          <Minus className="w-3 h-3" />
+                        </button>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                </div>
+
+                {/* Thing Words Column */}
+                <div className="space-y-2">
+                  <h4 className="text-md font-semibold text-red-700 flex items-center gap-2">
+                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                    Thing ({wordEntries.filter(e => e.category === 'thing').length})
+                  </h4>
+                  <div className="space-y-2">
+                    {wordEntries.filter(entry => entry.category === 'thing').map((entry) => (
+                      <div key={entry.id} className="flex items-center gap-2 p-2 bg-red-50 rounded-lg hover:bg-red-100 transition-colors border border-red-200">
+                        <input
+                          type="text"
+                          value={entry.word}
+                          onChange={(e) => updateWord(entry.id, e.target.value)}
+                          className="flex-1 px-2 py-1 border border-red-300 rounded focus:outline-none focus:ring-1 focus:ring-red-500 text-sm"
+                        />
+                        <button
+                          onClick={() => removeWord(entry.id)}
+                          className="p-1 text-red-500 hover:bg-red-100 rounded transition-colors"
+                        >
+                          <Minus className="w-3 h-3" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Theme Words Column */}
+                <div className="space-y-2">
+                  <h4 className="text-md font-semibold text-blue-700 flex items-center gap-2">
+                    <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                    Theme ({wordEntries.filter(e => e.category === 'theme').length})
+                  </h4>
+                  <div className="space-y-2">
+                    {wordEntries.filter(entry => entry.category === 'theme').map((entry) => (
+                      <div key={entry.id} className="flex items-center gap-2 p-2 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors border border-blue-200">
+                        <input
+                          type="text"
+                          value={entry.word}
+                          onChange={(e) => updateWord(entry.id, e.target.value)}
+                          className="flex-1 px-2 py-1 border border-blue-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm"
+                        />
+                        <button
+                          onClick={() => removeWord(entry.id)}
+                          className="p-1 text-red-500 hover:bg-red-100 rounded transition-colors"
+                        >
+                          <Minus className="w-3 h-3" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
