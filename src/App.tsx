@@ -257,9 +257,6 @@ function App() {
         future: newWords.future,
         thing: newWords.thing,
         theme: newWords.theme,
-  }
-  )
-}
         timestamp: new Date()
       };
       setPastPrompts(prev => [newPrompt, ...prev.slice(0, 9)]); // Keep last 10
@@ -269,7 +266,7 @@ function App() {
     setTimeout(() => {
       setIsAnimating(false);
     }, 100);
-  }, [getRandomWord]);
+  }, [getRandomWord, shownWords]);
 
   const handleWordsUpdate = useCallback((updatedWords: {
     future: string[];
@@ -549,9 +546,6 @@ function App() {
       </div>
     </div>
   );
-}
-
-export default App;
 }
 
 export default App;
