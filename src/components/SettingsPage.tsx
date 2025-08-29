@@ -133,21 +133,6 @@ const SettingsPage: React.FC<SettingsPageProps> = ({
         {/* Content */}
         <div className="p-6 overflow-y-auto max-h-[60vh]">
           <div className="space-y-6">
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-4">
-              <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
-                <div className="text-2xl font-bold text-green-600">{stats.future}</div>
-                <div className="text-sm text-green-700">Future Words</div>
-              </div>
-              <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-center">
-                <div className="text-2xl font-bold text-red-600">{stats.thing}</div>
-                <div className="text-sm text-red-700">Thing Words</div>
-              </div>
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-center">
-                <div className="text-2xl font-bold text-blue-600">{stats.theme}</div>
-                <div className="text-sm text-blue-700">Theme Words</div>
-              </div>
-            </div>
 
             {/* Add New Word */}
             <div className="bg-gray-50 rounded-lg p-4">
