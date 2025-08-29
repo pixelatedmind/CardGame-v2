@@ -37,17 +37,35 @@ const parseCSV = (csvText: string): Record<string, string[]> => {
     return {};
   }
   
+  // Debug the first line to see exact content
+  console.log('First line raw:', JSON.stringify(lines[0]));
+  
   const headers = lines[0].split(',').map(header => header.trim());
-  const trimmedHeaders = headers.map(header => header.toLowerCase());
-  console.log('Headers:', headers);
-  console.log('Trimmed headers:', trimmedHeaders);
-  const categoryIndex = trimmedHeaders.indexOf('category');
-  const wordIndex = trimmedHeaders.indexOf('word');
-  console.log('Category index:', categoryIndex, 'Word index:', wordIndex);
+  console.log('Headers after split and trim:', headers);
+  
+  // Find column indices using explicit loop for better debugging
+  let categoryIndex = -1;
+  let wordIndex = -1;
+  
+  for (let i = 0; i < headers.length; i++) {
+    const header = headers[i].toLowerCase();
+    console.log(`Header ${i}: "${header}"`);
+    if (header === 'category') {
+      categoryIndex = i;
+      console.log('Found category at index:', i);
+    }
+    if (header === 'word') {
+      wordIndex = i;
+      console.log('Found word at index:', i);
+    }
+  }
+  
+  console.log('Final indices - Category:', categoryIndex, 'Word:', wordIndex);
   
   if (categoryIndex === -1 || wordIndex === -1) {
-    console.error('Required columns not found. Available headers:', headers);
-    console.error('Looking for: "Word" and "Category"');
+    console.error('Required columns not found!');
+    console.error('Available headers:', headers);
+    console.error('Looking for: "word" and "category" (case insensitive)');
     console.error('Category index:', categoryIndex, 'Word index:', wordIndex);
     return {};
   }
