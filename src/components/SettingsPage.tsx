@@ -252,7 +252,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between p-6 border-t border-gray-200 bg-gray-50">
+        <div className="flex items-center justify-between px-6 py-3 border-t border-gray-200 bg-gray-50">
           <div className="flex items-center gap-2">
             {hasUnsavedChanges && (
               <span className="text-sm text-amber-600 flex items-center gap-1">
