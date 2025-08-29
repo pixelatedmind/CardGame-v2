@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { RefreshCw, History, Zap } from 'lucide-react';
+import { RefreshCw, History, Zap, Settings } from 'lucide-react';
 import QRCodeSticker from './components/QRCodeSticker';
+import SettingsPage from './components/SettingsPage';
 
 // Helper function to get dynamic text size based on word length
 const getDynamicTextSize = (word: string) => {
@@ -101,6 +102,7 @@ function App() {
     timestamp: Date;
   }>>([]);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
 
   // Load words from CSV data
   useEffect(() => {
