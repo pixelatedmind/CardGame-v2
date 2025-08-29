@@ -389,7 +389,7 @@ function App() {
               <div className="flex-1 flex flex-col">
                 <div className="text-2xl sm:text-3xl md:text-3xl lg:text-8xl xl:text-12xl landscape:text-2xl font-medium opacity-90 mb-2 sm:mb-4 md:mb-4 lg:mb-8 landscape:mb-1">In a</div>
                 <div className="bg-white rounded-lg sm:rounded-2xl py-2 px-1 sm:py-4 sm:px-2 md:py-3 md:px-1 lg:py-6 lg:px-3 flex-1 flex items-center justify-center landscape:py-3 landscape:px-1 shadow-lg mb-2 sm:mb-6 md:mb-4 lg:mb-16 landscape:mb-2 mt-2 sm:mt-6 md:mt-4 lg:mt-16 landscape:mt-2">
-                  <div className={`${getDynamicTextSize(currentWords.future)} font-bold text-green-500 leading-tight break-words`}>
+                  <div className={`${getDynamicTextSize(currentWords.future)} font-bold text-[#5e8566] leading-tight break-words`}>
                     {currentWords.future}
                   </div>
                 </div>
@@ -416,7 +416,7 @@ function App() {
               <div className="flex-1 flex flex-col">
                 <div className="text-2xl sm:text-3xl md:text-3xl lg:text-8xl xl:text-12xl landscape:text-2xl font-medium opacity-90 mb-2 sm:mb-4 md:mb-4 lg:mb-8 landscape:mb-1">there is a</div>
                 <div className="bg-white rounded-lg sm:rounded-2xl py-2 px-1 sm:py-4 sm:px-2 md:py-3 md:px-1 lg:py-6 lg:px-3 flex-1 flex items-center justify-center landscape:py-3 landscape:px-1 shadow-lg mb-2 sm:mb-6 md:mb-4 lg:mb-16 landscape:mb-2 mt-2 sm:mt-6 md:mt-4 lg:mt-16 landscape:mt-2">
-                  <div className={`${getDynamicTextSize(currentWords.thing)} font-bold text-red-500 leading-tight break-words`}>
+                  <div className={`${getDynamicTextSize(currentWords.thing)} font-bold text-[#e4374e] leading-tight break-words`}>
                     {currentWords.thing}
                   </div>
                 </div>
@@ -443,7 +443,7 @@ function App() {
               <div className="flex-1 flex flex-col">
                 <div className="text-2xl sm:text-3xl md:text-3xl lg:text-8xl xl:text-12xl landscape:text-2xl font-medium opacity-90 mb-2 sm:mb-4 md:mb-4 lg:mb-8 landscape:mb-1">related to</div>
                 <div className="bg-white rounded-lg sm:rounded-2xl py-2 px-1 sm:py-4 sm:px-2 md:py-3 md:px-1 lg:py-6 lg:px-3 flex-1 flex items-center justify-center landscape:py-3 landscape:px-1 shadow-lg mb-2 sm:mb-6 md:mb-4 lg:mb-16 landscape:mb-2 mt-2 sm:mt-6 md:mt-4 lg:mt-16 landscape:mt-2">
-                  <div className={`${getDynamicTextSize(currentWords.theme)} font-bold text-blue-500 leading-tight break-words ${isAnimating ? 'animate-pop-in' : ''}`}>
+                  <div className={`${getDynamicTextSize(currentWords.theme)} font-bold text-[#5b7994] leading-tight break-words ${isAnimating ? 'animate-pop-in' : ''}`}>
                     {currentWords.theme}
                   </div>
                 </div>
