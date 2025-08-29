@@ -1,6 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { X, Share2, Copy } from 'lucide-react';
-import * as QRCode from 'qrcode.js';
 
 interface ShareModalProps {
   isOpen: boolean;
@@ -9,25 +8,6 @@ interface ShareModalProps {
 }
 
 const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose, shareUrl }) => {
-  const qrCodeRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (isOpen && qrCodeRef.current) {
-      // Clear any existing QR code
-      qrCodeRef.current.innerHTML = '';
-      
-      // Generate new QR code
-      const qr = new QRCode(qrCodeRef.current, {
-        text: shareUrl,
-        width: 200,
-        height: 200,
-        colorDark: '#1f2937',
-        colorLight: '#ffffff',
-        correctLevel: QRCode.CorrectLevel.M,
-      });
-    }
-  }, [isOpen, shareUrl]);
-
   const copyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(shareUrl);
@@ -59,15 +39,8 @@ const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose, shareUrl }) =>
         {/* Content */}
         <div className="p-6 text-center">
           <p className="text-gray-600 mb-6">
-            Scan the QR code or copy the link to share this app
+            Copy the link to share this app
           </p>
-          
-          {/* QR Code Container */}
-          <div className="flex justify-center mb-6">
-            <div className="p-4 bg-white border-2 border-gray-200 rounded-xl shadow-sm">
-              <div ref={qrCodeRef} className="flex justify-center"></div>
-            </div>
-          </div>
 
           {/* URL Display and Copy */}
           <div className="bg-gray-50 rounded-lg p-4 mb-4">

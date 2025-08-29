@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { RefreshCw, History, Zap, Settings, Share2 } from 'lucide-react';
-import QRCodeSticker from './components/QRCodeSticker';
 import SettingsPage from './components/SettingsPage';
 import ShareModal from './components/ShareModal';
 
