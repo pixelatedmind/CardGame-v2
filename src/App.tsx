@@ -193,7 +193,7 @@ function App() {
     setIsGenerating(true);
     
     // Add slight delay for better UX
-    await new Promise(resolve => setTimeout(resolve, 150));
+    await new Promise(resolve => setTimeout(resolve, 75));
     
     const currentShownWords = shownWords[category];
     const newWord = getRandomWord(category, currentShownWords);
@@ -219,12 +219,12 @@ function App() {
     setIsAnimating(true);
     
     // Wait for animation to complete (0.75 seconds)
-    await new Promise(resolve => setTimeout(resolve, 750));
+    await new Promise(resolve => setTimeout(resolve, 375));
     
     setIsGenerating(true);
 
     // Add small delay after button animation ends
-    await new Promise(resolve => setTimeout(resolve, 200));
+    await new Promise(resolve => setTimeout(resolve, 100));
     
     // Generate new words excluding currently shown ones
     const newWords = {
