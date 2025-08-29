@@ -39,8 +39,17 @@ const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose, shareUrl }) =>
         {/* Content */}
         <div className="p-6 text-center">
           <p className="text-gray-600 mb-6">
-            Copy the link to share this app
+            Scan the QR code or copy the link to share this app
           </p>
+
+          {/* QR Code */}
+          <div className="mb-6 flex justify-center">
+            <img 
+              src="/QR.png" 
+              alt="QR Code for Things from the Future app"
+              className="w-48 h-48 border border-gray-200 rounded-lg shadow-sm"
+            />
+          </div>
 
           {/* URL Display and Copy */}
           <div className="bg-gray-50 rounded-lg p-4 mb-4">
@@ -60,7 +69,7 @@ const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose, shareUrl }) =>
           </div>
 
           <p className="text-xs text-gray-500">
-            Share this link to let others use the Things from the Future card game
+            Scan the QR code or share the link to let others use the Things from the Future card game
           </p>
         </div>
       </div>
