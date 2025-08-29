@@ -375,7 +375,11 @@ function App() {
           <div className="bg-gradient-to-br from-green-400 to-green-500 rounded-xl sm:rounded-3xl p-2 sm:p-4 text-white shadow-2xl lg:hover:shadow-3xl transition-all duration-300 transform lg:hover:scale-105 relative">
             {/* Refresh Icon */}
             <button
-              onClick={() => generateWord('future')}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                generateWord('future');
+              }}
               className="absolute top-3 right-3 p-2 text-white opacity-70 hover:opacity-100 hover:bg-white/20 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/50"
               title="Generate new future word"
             >
@@ -398,7 +402,11 @@ function App() {
           <div className="bg-gradient-to-br from-red-400 to-red-500 rounded-xl sm:rounded-3xl p-2 sm:p-4 text-white shadow-2xl lg:hover:shadow-3xl transition-all duration-300 transform lg:hover:scale-105 relative">
             {/* Refresh Icon */}
             <button
-              onClick={() => generateWord('thing')}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                generateWord('thing');
+              }}
               className="absolute top-3 right-3 p-2 text-white opacity-70 hover:opacity-100 hover:bg-white/20 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/50"
               title="Generate new thing word"
             >
@@ -421,7 +429,11 @@ function App() {
           <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl sm:rounded-3xl p-2 sm:p-4 text-white shadow-2xl lg:hover:shadow-3xl transition-all duration-300 transform lg:hover:scale-105 relative">
             {/* Refresh Icon */}
             <button
-              onClick={() => generateWord('theme')}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                generateWord('theme');
+              }}
               className="absolute top-3 right-3 p-2 text-white opacity-70 hover:opacity-100 hover:bg-white/20 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/50"
               title="Generate new theme word"
             >
