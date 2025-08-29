@@ -387,7 +387,7 @@ function App() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-4 sm:mb-8 landscape:grid-cols-3 landscape:gap-3">
           
           {/* Left Card - Future */}
-          <div className="bg-gradient-to-br from-green-400 to-green-500 rounded-xl sm:rounded-3xl p-3 sm:p-8 text-white shadow-2xl lg:hover:shadow-3xl transition-all duration-300 transform lg:hover:scale-105 relative">
+          <div className="bg-gradient-to-br from-green-400 to-green-500 rounded-xl sm:rounded-3xl p-2 sm:p-4 text-white shadow-2xl lg:hover:shadow-3xl transition-all duration-300 transform lg:hover:scale-105 relative">
             {/* Refresh Icon */}
             <button
               onClick={() => handleCardDoubleClick('future')}
@@ -433,7 +433,7 @@ function App() {
           </div>
 
           {/* Right Card - Theme */}
-          <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl sm:rounded-3xl p-3 sm:p-8 text-white shadow-2xl lg:hover:shadow-3xl transition-all duration-300 transform lg:hover:scale-105 relative">
+          <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl sm:rounded-3xl p-2 sm:p-4 text-white shadow-2xl lg:hover:shadow-3xl transition-all duration-300 transform lg:hover:scale-105 relative">
             {/* Refresh Icon */}
             <button
               onClick={() => handleCardDoubleClick('theme')}
