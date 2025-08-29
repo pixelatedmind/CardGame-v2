@@ -203,41 +203,6 @@ function App() {
       [category]: newWord
     }));
     
-    // Update shown words for this category
-    setShownWords(prev => {
-      const updated = { ...prev };
-      const wasAlreadyShown = currentShownWords.includes(newWord);
-      updated[category] = wasAlreadyShown ? [newWord] : [...currentShownWords, newWord];
-      return updated;
-    });
-    
-    setIsGenerating(false);
-  }, [getRandomWord, shownWords]);
-
-  const generateWord = useCallback(async (category: keyof typeof wordCategories) => {
-    setIsGenerating(true);
-    
-    // Add slight delay for better UX
-    await new Promise(resolve => setTimeout(resolve, 150));
-    
-    const currentShownWords = shownWords[category];
-    const newWord = getRandomWord(category, currentShownWords);
-    
-    setCurrentWords(prev => ({
-      ...prev,
-      [category]: newWord
-    }));
-    
-    // Update shown words for this category
-    setShownWords(prev => {
-      const updated = { ...prev };
-      const wasAlreadyShown = currentShownWords.includes(newWord);
-      updated[category] = wasAlreadyShown ? [newWord] : [...currentShownWords, newWord];
-      return updated;
-    });
-    
-    setIsGenerating(false);
-  }, [getRandomWord, shownWords]);
 
   const generateAllWords = useCallback(async () => {
     // Start animation
@@ -282,6 +247,9 @@ function App() {
         future: newWords.future,
         thing: newWords.thing,
         theme: newWords.theme,
+  }
+  )
+}
         timestamp: new Date()
       };
       setPastPrompts(prev => [newPrompt, ...prev.slice(0, 9)]); // Keep last 10
@@ -291,7 +259,7 @@ function App() {
     setTimeout(() => {
       setIsAnimating(false);
     }, 100);
-  }, [getRandomWord, shownWords]);
+  }, [getRandomWord]);
 
   const handleWordsUpdate = useCallback((updatedWords: {
     future: string[];
@@ -423,7 +391,7 @@ function App() {
           <div className="bg-gradient-to-br from-red-400 to-red-500 rounded-xl sm:rounded-3xl p-2 sm:p-4 text-white shadow-2xl lg:hover:shadow-3xl transition-all duration-300 transform lg:hover:scale-105 relative">
             {/* Refresh Icon */}
             <button
-              onClick={() => handleCardDoubleClick('thing')}
+              onClick={() => generateWord('thing')}
               className="absolute top-3 right-3 p-2 text-white opacity-70 hover:opacity-100 hover:bg-white/20 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/50"
               title="Generate new thing word"
             >
@@ -446,7 +414,7 @@ function App() {
           <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl sm:rounded-3xl p-2 sm:p-4 text-white shadow-2xl lg:hover:shadow-3xl transition-all duration-300 transform lg:hover:scale-105 relative">
             {/* Refresh Icon */}
             <button
-              onClick={() => handleCardDoubleClick('theme')}
+              onClick={() => generateWord('theme')}
               className="absolute top-3 right-3 p-2 text-white opacity-70 hover:opacity-100 hover:bg-white/20 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/50"
               title="Generate new theme word"
             >
@@ -571,6 +539,9 @@ function App() {
       </div>
     </div>
   );
+}
+
+export default App;
 }
 
 export default App;
