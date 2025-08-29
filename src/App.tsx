@@ -380,7 +380,7 @@ function App() {
                 e.stopPropagation();
                 generateWord('future');
               }}
-              className="absolute top-3 right-3 p-2 text-white opacity-80 hover:opacity-100 hover:bg-white/30 hover:scale-110 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 shadow-lg hover:shadow-xl"
+              className="absolute top-3 right-3 z-10 p-3 text-white bg-black/20 hover:bg-black/40 hover:scale-125 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/70 shadow-lg hover:shadow-2xl cursor-pointer"
               title="Generate new future word"
             >
               <RefreshCw className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -407,7 +407,7 @@ function App() {
                 e.stopPropagation();
                 generateWord('thing');
               }}
-              className="absolute top-3 right-3 p-2 text-white opacity-80 hover:opacity-100 hover:bg-white/30 hover:scale-110 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 shadow-lg hover:shadow-xl"
+              className="absolute top-3 right-3 z-10 p-3 text-white bg-black/20 hover:bg-black/40 hover:scale-125 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/70 shadow-lg hover:shadow-2xl cursor-pointer"
               title="Generate new thing word"
             >
               <RefreshCw className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -434,7 +434,7 @@ function App() {
                 e.stopPropagation();
                 generateWord('theme');
               }}
-              className="absolute top-3 right-3 p-2 text-white opacity-80 hover:opacity-100 hover:bg-white/30 hover:scale-110 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 shadow-lg hover:shadow-xl"
+              className="absolute top-3 right-3 z-10 p-3 text-white bg-black/20 hover:bg-black/40 hover:scale-125 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/70 shadow-lg hover:shadow-2xl cursor-pointer"
               title="Generate new theme word"
             >
               <RefreshCw className="w-4 h-4 sm:w-5 sm:h-5" />
