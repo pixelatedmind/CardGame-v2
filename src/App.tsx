@@ -545,7 +545,6 @@ function App() {
         isOpen={showSettings}
         onClose={() => setShowSettings(false)}
         onWordsUpdate={handleWordsUpdate}
-        defaultWords={defaultWordsData}
         currentWords={{
           future: wordCategories.future?.words || [],
           thing: wordCategories.thing?.words || [],
