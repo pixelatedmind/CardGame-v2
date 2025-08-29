@@ -137,31 +137,33 @@ const SettingsPage: React.FC<SettingsPageProps> = ({
             {/* Add New Word */}
             <div className="bg-gray-50 rounded-lg p-4">
               <h3 className="text-lg font-semibold text-gray-800 mb-3">Add New Word</h3>
-              <div className="flex gap-3">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <input
                   type="text"
                   value={newWord}
                   onChange={(e) => setNewWord(e.target.value)}
                   placeholder="Enter new word..."
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 min-w-0"
                   onKeyPress={(e) => e.key === 'Enter' && addWord()}
                 />
-                <select
-                  value={newCategory}
-                  onChange={(e) => setNewCategory(e.target.value as any)}
-                  className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                >
-                  <option value="future">Future</option>
-                  <option value="thing">Thing</option>
-                  <option value="theme">Theme</option>
-                </select>
-                <button
-                  onClick={addWord}
-                  className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors flex items-center gap-2"
-                >
-                  <Plus className="w-4 h-4" />
-                  Add
-                </button>
+                <div className="flex gap-3 sm:flex-shrink-0">
+                  <select
+                    value={newCategory}
+                    onChange={(e) => setNewCategory(e.target.value as any)}
+                    className="flex-1 sm:flex-none px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  >
+                    <option value="future">Future</option>
+                    <option value="thing">Thing</option>
+                    <option value="theme">Theme</option>
+                  </select>
+                  <button
+                    onClick={addWord}
+                    className="flex-1 sm:flex-none px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors flex items-center justify-center gap-2"
+                  >
+                    <Plus className="w-4 h-4" />
+                    Add
+                  </button>
+                </div>
               </div>
             </div>
 
