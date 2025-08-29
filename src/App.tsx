@@ -372,7 +372,7 @@ function App() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-4 sm:mb-8 landscape:grid-cols-3 landscape:gap-3">
           
           {/* Left Card - Future */}
-          <div className="bg-gradient-to-br from-[#5e8566] to-[#7ca283] rounded-xl sm:rounded-3xl p-2 sm:p-4 text-white shadow-2xl relative">
+          <div className="bg-gradient-to-br from-[#7ca283] to-[#5e8566] rounded-xl sm:rounded-3xl p-2 sm:p-4 text-white shadow-2xl relative">
             {/* Refresh Icon */}
             <button
               onClick={(e) => {
@@ -399,7 +399,7 @@ function App() {
           </div>
 
           {/* Middle Card - Thing */}
-          <div className="bg-gradient-to-br from-[#e4374e] to-[#ef6678] rounded-xl sm:rounded-3xl p-2 sm:p-4 text-white shadow-2xl relative">
+          <div className="bg-gradient-to-br from-[#ef6678] to-[#e4374e] rounded-xl sm:rounded-3xl p-2 sm:p-4 text-white shadow-2xl relative">
             {/* Refresh Icon */}
             <button
               onClick={(e) => {
@@ -426,7 +426,7 @@ function App() {
           </div>
 
           {/* Right Card - Theme */}
-          <div className="bg-gradient-to-br from-[#5b7994] to-[#7c94ad] rounded-xl sm:rounded-3xl p-2 sm:p-4 text-white shadow-2xl relative">
+          <div className="bg-gradient-to-br from-[#7c94ad] to-[#5b7994] rounded-xl sm:rounded-3xl p-2 sm:p-4 text-white shadow-2xl relative">
             {/* Refresh Icon */}
             <button
               onClick={(e) => {
