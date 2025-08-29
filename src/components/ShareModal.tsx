@@ -12,7 +12,7 @@ const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose, shareUrl }) =>
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden">
+      <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50">
           <div className="flex items-center gap-3">
@@ -36,9 +36,9 @@ const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose, shareUrl }) =>
           {/* QR Code */}
           <div className="mb-6 flex justify-center">
             <img 
-              src="/QR.png" 
+              src="/QR-Game.svg" 
               alt="QR Code for Things from the Future app"
-              className="w-48 h-48 border border-gray-200 rounded-lg shadow-sm"
+              className="w-[700px] h-[550px] max-w-full border border-gray-200 rounded-lg shadow-sm"
             />
           </div>
 
