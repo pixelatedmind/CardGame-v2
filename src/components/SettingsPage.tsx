@@ -183,7 +183,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({
             {/* Word List */}
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-gray-800">Current Words</h3>
-              <div className="grid gap-2 max-h-80 overflow-y-auto">
+              <div className="grid gap-2">
                 {wordEntries.map((entry) => (
                   <div key={entry.id} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
                     <span className={`px-2 py-1 rounded text-xs font-medium border ${getCategoryColor(entry.category)}`}>
