@@ -6,7 +6,7 @@ export default defineConfig({
   base: '/',
   plugins: [react()],
   optimizeDeps: {
-    exclude: ['lucide-react', 'qrcode.js'],
+    exclude: ['lucide-react'],
   },
   build: {
     outDir: 'dist',
