@@ -396,8 +396,15 @@ function App() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-4 sm:mb-8 landscape:grid-cols-3 landscape:gap-3">
           
           {/* Left Card - Future */}
-          <div className="bg-gradient-to-br from-green-400 to-green-500 rounded-xl sm:rounded-3xl p-3 sm:p-8 text-white shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105 cursor-pointer"
-               onDoubleClick={() => handleCardDoubleClick('future')}>
+          <div className="bg-gradient-to-br from-green-400 to-green-500 rounded-xl sm:rounded-3xl p-3 sm:p-8 text-white shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105 relative">
+            {/* Refresh Icon */}
+            <button
+              onClick={() => handleCardDoubleClick('future')}
+              className="absolute top-3 right-3 p-2 text-white opacity-70 hover:opacity-100 hover:bg-white/20 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/50"
+              title="Generate new future word"
+            >
+              <RefreshCw className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
             <div className="h-full flex flex-col min-h-[160px] sm:min-h-[250px] md:min-h-[350px] lg:min-h-[600px] xl:min-h-[700px] landscape:min-h-[140px] text-center">
               <div className="flex-1 flex flex-col">
                 <div className="text-2xl sm:text-3xl md:text-3xl lg:text-8xl xl:text-12xl landscape:text-2xl font-medium opacity-90 mb-2 sm:mb-4 md:mb-4 lg:mb-8 landscape:mb-1">In a</div>
@@ -412,8 +419,15 @@ function App() {
           </div>
 
           {/* Middle Card - Thing */}
-          <div className="bg-gradient-to-br from-red-400 to-red-500 rounded-xl sm:rounded-3xl p-3 sm:p-8 text-white shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105 cursor-pointer"
-               onDoubleClick={() => handleCardDoubleClick('thing')}>
+          <div className="bg-gradient-to-br from-red-400 to-red-500 rounded-xl sm:rounded-3xl p-3 sm:p-8 text-white shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105 relative">
+            {/* Refresh Icon */}
+            <button
+              onClick={() => handleCardDoubleClick('thing')}
+              className="absolute top-3 right-3 p-2 text-white opacity-70 hover:opacity-100 hover:bg-white/20 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/50"
+              title="Generate new thing word"
+            >
+              <RefreshCw className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
             <div className="h-full flex flex-col min-h-[160px] sm:min-h-[250px] md:min-h-[350px] lg:min-h-[600px] xl:min-h-[700px] landscape:min-h-[140px] text-center">
               <div className="flex-1 flex flex-col">
                 <div className="text-2xl sm:text-3xl md:text-3xl lg:text-8xl xl:text-12xl landscape:text-2xl font-medium opacity-90 mb-2 sm:mb-4 md:mb-4 lg:mb-8 landscape:mb-1">there is a</div>
@@ -428,8 +442,15 @@ function App() {
           </div>
 
           {/* Right Card - Theme */}
-          <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl sm:rounded-3xl p-3 sm:p-8 text-white shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105 cursor-pointer"
-               onDoubleClick={() => handleCardDoubleClick('theme')}>
+          <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl sm:rounded-3xl p-3 sm:p-8 text-white shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105 relative">
+            {/* Refresh Icon */}
+            <button
+              onClick={() => handleCardDoubleClick('theme')}
+              className="absolute top-3 right-3 p-2 text-white opacity-70 hover:opacity-100 hover:bg-white/20 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/50"
+              title="Generate new theme word"
+            >
+              <RefreshCw className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
             <div className="h-full flex flex-col min-h-[160px] sm:min-h-[250px] md:min-h-[350px] lg:min-h-[600px] xl:min-h-[700px] landscape:min-h-[140px] text-center">
               <div className="flex-1 flex flex-col">
                 <div className="text-2xl sm:text-3xl md:text-3xl lg:text-8xl xl:text-12xl landscape:text-2xl font-medium opacity-90 mb-2 sm:mb-4 md:mb-4 lg:mb-8 landscape:mb-1">related to</div>
