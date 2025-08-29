@@ -239,6 +239,35 @@ function App() {
     }, 100);
   }, [getRandomWord]);
 
+  const handleWordsUpdate = useCallback((updatedWords: {
+    future: string[];
+    thing: string[];
+    theme: string[];
+  }) => {
+    const updatedCategories = {
+      future: {
+        id: 'future',
+        label: 'Energy Future',
+        description: 'In a [WORD] energy future',
+        words: updatedWords.future
+      },
+      thing: {
+        id: 'thing',
+        label: 'Solution',
+        description: 'There is a [WORD]',
+        words: updatedWords.thing
+      },
+      theme: {
+        id: 'theme',
+        label: 'Focus Area',
+        description: 'Related to [WORD]',
+        words: updatedWords.theme
+      }
+    };
+    
+    setWordCategories(updatedCategories);
+  }, []);
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
