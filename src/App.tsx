@@ -28,6 +28,7 @@ interface WordCategory {
 // Parse CSV function
 const parseCSV = (csvText: string): Record<string, string[]> => {
   console.log('Parsing CSV...');
+  console.log('Raw CSV text (first 500 chars):', csvText.substring(0, 500));
   const lines = csvText.trim().split('\n').filter(line => line.trim() !== '');
   console.log('Number of lines:', lines.length);
   
@@ -36,8 +37,8 @@ const parseCSV = (csvText: string): Record<string, string[]> => {
     return {};
   }
   
-  const headers = lines[0].split(',');
-  const trimmedHeaders = headers.map(header => header.trim().toLowerCase());
+  const headers = lines[0].split(',').map(header => header.trim());
+  const trimmedHeaders = headers.map(header => header.toLowerCase());
   console.log('Headers:', headers);
   console.log('Trimmed headers:', trimmedHeaders);
   const categoryIndex = trimmedHeaders.indexOf('category');
@@ -45,7 +46,9 @@ const parseCSV = (csvText: string): Record<string, string[]> => {
   console.log('Category index:', categoryIndex, 'Word index:', wordIndex);
   
   if (categoryIndex === -1 || wordIndex === -1) {
-    console.error('Required columns not found. Category index:', categoryIndex, 'Word index:', wordIndex);
+    console.error('Required columns not found. Available headers:', headers);
+    console.error('Looking for: "Word" and "Category"');
+    console.error('Category index:', categoryIndex, 'Word index:', wordIndex);
     return {};
   }
   
@@ -55,7 +58,8 @@ const parseCSV = (csvText: string): Record<string, string[]> => {
     const line = lines[i].trim();
     if (!line) continue;
     
-    const values = line.split(',').map(val => val.trim());
+    // Handle potential commas within quoted values
+    const values = line.split(',').map(val => val.trim().replace(/^"(.*)"$/, '$1'));
     if (i <= 5) { // Log first few lines for debugging
       console.log(`Line ${i}:`, values);
     }
