@@ -189,31 +189,6 @@ function App() {
     return selectedWord;
   }, [wordCategories]);
 
-  const generateWord = useCallback(async (category: keyof typeof wordCategories) => {
-    setIsGenerating(true);
-    
-    // Add slight delay for better UX
-    await new Promise(resolve => setTimeout(resolve, 150));
-    
-    const currentShownWords = shownWords[category];
-    const newWord = getRandomWord(category, currentShownWords);
-    
-    setCurrentWords(prev => ({
-      ...prev,
-      [category]: newWord
-    }));
-    
-    // Update shown words for this category
-    setShownWords(prev => {
-      const updated = { ...prev };
-      const wasAlreadyShown = prev[category].includes(newWord);
-      updated[category] = wasAlreadyShown ? [newWord] : [...prev[category], newWord];
-      return updated;
-    });
-    
-    setIsGenerating(false);
-  }, [getRandomWord, shownWords]);
-
   const handleCardDoubleClick = useCallback(async (category: keyof typeof wordCategories) => {
     setIsGenerating(true);
     
@@ -231,8 +206,33 @@ function App() {
     // Update shown words for this category
     setShownWords(prev => {
       const updated = { ...prev };
-      const wasAlreadyShown = prev[category].includes(newWord);
-      updated[category] = wasAlreadyShown ? [newWord] : [...prev[category], newWord];
+      const wasAlreadyShown = currentShownWords.includes(newWord);
+      updated[category] = wasAlreadyShown ? [newWord] : [...currentShownWords, newWord];
+      return updated;
+    });
+    
+    setIsGenerating(false);
+  }, [getRandomWord, shownWords]);
+
+  const generateWord = useCallback(async (category: keyof typeof wordCategories) => {
+    setIsGenerating(true);
+    
+    // Add slight delay for better UX
+    await new Promise(resolve => setTimeout(resolve, 150));
+    
+    const currentShownWords = shownWords[category];
+    const newWord = getRandomWord(category, currentShownWords);
+    
+    setCurrentWords(prev => ({
+      ...prev,
+      [category]: newWord
+    }));
+    
+    // Update shown words for this category
+    setShownWords(prev => {
+      const updated = { ...prev };
+      const wasAlreadyShown = currentShownWords.includes(newWord);
+      updated[category] = wasAlreadyShown ? [newWord] : [...currentShownWords, newWord];
       return updated;
     });
     
@@ -423,7 +423,7 @@ function App() {
           <div className="bg-gradient-to-br from-red-400 to-red-500 rounded-xl sm:rounded-3xl p-2 sm:p-4 text-white shadow-2xl lg:hover:shadow-3xl transition-all duration-300 transform lg:hover:scale-105 relative">
             {/* Refresh Icon */}
             <button
-              onClick={() => generateWord('thing')}
+              onClick={() => handleCardDoubleClick('thing')}
               className="absolute top-3 right-3 p-2 text-white opacity-70 hover:opacity-100 hover:bg-white/20 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/50"
               title="Generate new thing word"
             >
