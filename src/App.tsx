@@ -429,6 +429,18 @@ function App() {
         )}
 
       </div>
+      
+      {/* Settings Page */}
+      <SettingsPage
+        isOpen={showSettings}
+        onClose={() => setShowSettings(false)}
+        onWordsUpdate={handleWordsUpdate}
+        currentWords={{
+          future: wordCategories.future?.words || [],
+          thing: wordCategories.thing?.words || [],
+          theme: wordCategories.theme?.words || []
+        }}
+      />
       </div>
     </div>
   );
