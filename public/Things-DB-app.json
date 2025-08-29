@@ -1,0 +1,502 @@
+[
+  {
+    "ID": 1,
+    "Word": "FEMINIST",
+    "Category": "Future"
+  },
+  {
+    "ID": 2,
+    "Word": "STERILE",
+    "Category": "Future"
+  },
+  {
+    "ID": 3,
+    "Word": "GRASSROOTS",
+    "Category": "Future"
+  },
+  {
+    "ID": 4,
+    "Word": "NOIR",
+    "Category": "Future"
+  },
+  {
+    "ID": 5,
+    "Word": "BEAUTIFUL",
+    "Category": "Future"
+  },
+  {
+    "ID": 6,
+    "Word": "FREE",
+    "Category": "Future"
+  },
+  {
+    "ID": 7,
+    "Word": "PLAYFUL",
+    "Category": "Future"
+  },
+  {
+    "ID": 8,
+    "Word": "BRIGHT",
+    "Category": "Future"
+  },
+  {
+    "ID": 9,
+    "Word": "CREATIVE",
+    "Category": "Future"
+  },
+  {
+    "ID": 10,
+    "Word": "RECOVERING",
+    "Category": "Future"
+  },
+  {
+    "ID": 11,
+    "Word": "RESILIENT",
+    "Category": "Future"
+  },
+  {
+    "ID": 12,
+    "Word": "DEPRESSING",
+    "Category": "Future"
+  },
+  {
+    "ID": 13,
+    "Word": "GREEN",
+    "Category": "Future"
+  },
+  {
+    "ID": 14,
+    "Word": "REGIMENTED",
+    "Category": "Future"
+  },
+  {
+    "ID": 15,
+    "Word": "VOLATILE",
+    "Category": "Future"
+  },
+  {
+    "ID": 16,
+    "Word": "INNOVATIVE",
+    "Category": "Future"
+  },
+  {
+    "ID": 17,
+    "Word": "WISE",
+    "Category": "Future"
+  },
+  {
+    "ID": 18,
+    "Word": "MUNDANE",
+    "Category": "Future"
+  },
+  {
+    "ID": 19,
+    "Word": "SELFISH",
+    "Category": "Future"
+  },
+  {
+    "ID": 20,
+    "Word": "FAST",
+    "Category": "Future"
+  },
+  {
+    "ID": 21,
+    "Word": "REACTIONARY",
+    "Category": "Future"
+  },
+  {
+    "ID": 22,
+    "Word": "DECOLONIZED",
+    "Category": "Future"
+  },
+  {
+    "ID": 23,
+    "Word": "HILARIOUS",
+    "Category": "Future"
+  },
+  {
+    "ID": 24,
+    "Word": "HIGH-TECH",
+    "Category": "Future"
+  },
+  {
+    "ID": 25,
+    "Word": "SMART",
+    "Category": "Future"
+  },
+  {
+    "ID": 26,
+    "Word": "SCARY",
+    "Category": "Future"
+  },
+  {
+    "ID": 27,
+    "Word": "GLOBAL",
+    "Category": "Future"
+  },
+  {
+    "ID": 28,
+    "Word": "FAIR",
+    "Category": "Future"
+  },
+  {
+    "ID": 29,
+    "Word": "THRILLING",
+    "Category": "Future"
+  },
+  {
+    "ID": 30,
+    "Word": "SAD",
+    "Category": "Future"
+  },
+  {
+    "ID": 31,
+    "Word": "QUEER",
+    "Category": "Future"
+  },
+  {
+    "ID": 32,
+    "Word": "BIZARRE",
+    "Category": "Future"
+  },
+  {
+    "ID": 33,
+    "Word": "WILD",
+    "Category": "Future"
+  },
+  {
+    "ID": 34,
+    "Word": "JOYFUL",
+    "Category": "Future"
+  },
+  {
+    "ID": 35,
+    "Word": "FAMILY",
+    "Category": "Thing"
+  },
+  {
+    "ID": 36,
+    "Word": "TRANSPORTATION",
+    "Category": "Thing"
+  },
+  {
+    "ID": 37,
+    "Word": "WORK",
+    "Category": "Thing"
+  },
+  {
+    "ID": 38,
+    "Word": "THE ECONOMY",
+    "Category": "Thing"
+  },
+  {
+    "ID": 39,
+    "Word": "LEISURE",
+    "Category": "Thing"
+  },
+  {
+    "ID": 40,
+    "Word": "FARMING",
+    "Category": "Thing"
+  },
+  {
+    "ID": 41,
+    "Word": "JUSTICE",
+    "Category": "Thing"
+  },
+  {
+    "ID": 42,
+    "Word": "CLIMATE CHANGE",
+    "Category": "Thing"
+  },
+  {
+    "ID": 43,
+    "Word": "DEATH",
+    "Category": "Thing"
+  },
+  {
+    "ID": 44,
+    "Word": "SPIRITUALITY",
+    "Category": "Thing"
+  },
+  {
+    "ID": 45,
+    "Word": "STORYTELLING",
+    "Category": "Thing"
+  },
+  {
+    "ID": 46,
+    "Word": "ANIMALS",
+    "Category": "Thing"
+  },
+  {
+    "ID": 47,
+    "Word": "THE ENVIRONMENT",
+    "Category": "Thing"
+  },
+  {
+    "ID": 48,
+    "Word": "WAR",
+    "Category": "Thing"
+  },
+  {
+    "ID": 49,
+    "Word": "RESOURCES",
+    "Category": "Thing"
+  },
+  {
+    "ID": 50,
+    "Word": "IMAGINATION",
+    "Category": "Thing"
+  },
+  {
+    "ID": 51,
+    "Word": "ENERGY",
+    "Category": "Thing"
+  },
+  {
+    "ID": 52,
+    "Word": "RELIGION",
+    "Category": "Thing"
+  },
+  {
+    "ID": 53,
+    "Word": "SURVEILLANCE",
+    "Category": "Thing"
+  },
+  {
+    "ID": 54,
+    "Word": "CLASS",
+    "Category": "Thing"
+  },
+  {
+    "ID": 55,
+    "Word": "MEMORY",
+    "Category": "Thing"
+  },
+  {
+    "ID": 56,
+    "Word": "MONEY",
+    "Category": "Thing"
+  },
+  {
+    "ID": 57,
+    "Word": "EDUCATION",
+    "Category": "Thing"
+  },
+  {
+    "ID": 58,
+    "Word": "HEALTH",
+    "Category": "Thing"
+  },
+  {
+    "ID": 59,
+    "Word": "SCIENCE",
+    "Category": "Thing"
+  },
+  {
+    "ID": 60,
+    "Word": "SPACE",
+    "Category": "Thing"
+  },
+  {
+    "ID": 61,
+    "Word": "IDENTITY",
+    "Category": "Thing"
+  },
+  {
+    "ID": 62,
+    "Word": "LOVE",
+    "Category": "Thing"
+  },
+  {
+    "ID": 63,
+    "Word": "WATER",
+    "Category": "Thing"
+  },
+  {
+    "ID": 64,
+    "Word": "CITIES",
+    "Category": "Thing"
+  },
+  {
+    "ID": 65,
+    "Word": "GENETICS",
+    "Category": "Thing"
+  },
+  {
+    "ID": 66,
+    "Word": "ARTIFICIAL INTELLIGENCE",
+    "Category": "Thing"
+  },
+  {
+    "ID": 67,
+    "Word": "GOVERNANCE",
+    "Category": "Thing"
+  },
+  {
+    "ID": 68,
+    "Word": "THE OCEAN",
+    "Category": "Thing"
+  },
+  {
+    "ID": 69,
+    "Word": "MONUMENT",
+    "Category": "Theme"
+  },
+  {
+    "ID": 70,
+    "Word": "JOB",
+    "Category": "Theme"
+  },
+  {
+    "ID": 71,
+    "Word": "BUILDING",
+    "Category": "Theme"
+  },
+  {
+    "ID": 72,
+    "Word": "APP",
+    "Category": "Theme"
+  },
+  {
+    "ID": 73,
+    "Word": "INVENTION",
+    "Category": "Theme"
+  },
+  {
+    "ID": 74,
+    "Word": "PLAYTHING",
+    "Category": "Theme"
+  },
+  {
+    "ID": 75,
+    "Word": "RITUAL",
+    "Category": "Theme"
+  },
+  {
+    "ID": 76,
+    "Word": "SONG",
+    "Category": "Theme"
+  },
+  {
+    "ID": 77,
+    "Word": "KIT",
+    "Category": "Theme"
+  },
+  {
+    "ID": 78,
+    "Word": "PRODUCT",
+    "Category": "Theme"
+  },
+  {
+    "ID": 79,
+    "Word": "LAW",
+    "Category": "Theme"
+  },
+  {
+    "ID": 80,
+    "Word": "TOOL",
+    "Category": "Theme"
+  },
+  {
+    "ID": 81,
+    "Word": "POSTER",
+    "Category": "Theme"
+  },
+  {
+    "ID": 82,
+    "Word": "GAME",
+    "Category": "Theme"
+  },
+  {
+    "ID": 83,
+    "Word": "NEWS REPORT",
+    "Category": "Theme"
+  },
+  {
+    "ID": 84,
+    "Word": "DISASTER",
+    "Category": "Theme"
+  },
+  {
+    "ID": 85,
+    "Word": "BESTSELLER",
+    "Category": "Theme"
+  },
+  {
+    "ID": 86,
+    "Word": "VIDEO",
+    "Category": "Theme"
+  },
+  {
+    "ID": 87,
+    "Word": "MAP",
+    "Category": "Theme"
+  },
+  {
+    "ID": 88,
+    "Word": "WEAPON",
+    "Category": "Theme"
+  },
+  {
+    "ID": 89,
+    "Word": "HEIRLOOM",
+    "Category": "Theme"
+  },
+  {
+    "ID": 90,
+    "Word": "DRUG",
+    "Category": "Theme"
+  },
+  {
+    "ID": 91,
+    "Word": "TATTOO",
+    "Category": "Theme"
+  },
+  {
+    "ID": 92,
+    "Word": "GARMENT",
+    "Category": "Theme"
+  },
+  {
+    "ID": 93,
+    "Word": "FOOD",
+    "Category": "Theme"
+  },
+  {
+    "ID": 94,
+    "Word": "MACHINE",
+    "Category": "Theme"
+  },
+  {
+    "ID": 95,
+    "Word": "DEVICE",
+    "Category": "Theme"
+  },
+  {
+    "ID": 96,
+    "Word": "FESTIVAL",
+    "Category": "Theme"
+  },
+  {
+    "ID": 97,
+    "Word": "PUBLIC SERVICE ANNOUNCEMENT",
+    "Category": "Theme"
+  },
+  {
+    "ID": 98,
+    "Word": "ORGANIZATION",
+    "Category": "Theme"
+  },
+  {
+    "ID": 99,
+    "Word": "HEADLINE",
+    "Category": "Theme"
+  },
+  {
+    "ID": 100,
+    "Word": "MASK",
+    "Category": "Theme"
+  }
+]
