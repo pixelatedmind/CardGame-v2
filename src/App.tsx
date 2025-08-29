@@ -213,9 +213,9 @@ function App() {
     // Add small delay after button animation ends
     await new Promise(resolve => setTimeout(resolve, 200));
     const newWords = {
-      future: getRandomWord('future'),
-      thing: getRandomWord('thing'),
-      theme: getRandomWord('theme')
+      future: getRandomWord('future', currentWords.future),
+      thing: getRandomWord('thing', currentWords.thing),
+      theme: getRandomWord('theme', currentWords.theme)
     };
 
     setCurrentWords(newWords);
