@@ -410,7 +410,7 @@ function App() {
           </div>
 
           {/* Middle Card - Thing */}
-          <div className="bg-gradient-to-br from-red-400 to-red-500 rounded-xl sm:rounded-3xl p-3 sm:p-8 text-white shadow-2xl lg:hover:shadow-3xl transition-all duration-300 transform lg:hover:scale-105 relative">
+          <div className="bg-gradient-to-br from-red-400 to-red-500 rounded-xl sm:rounded-3xl p-2 sm:p-4 text-white shadow-2xl lg:hover:shadow-3xl transition-all duration-300 transform lg:hover:scale-105 relative">
             {/* Refresh Icon */}
             <button
               onClick={() => handleCardDoubleClick('thing')}
