@@ -203,6 +203,16 @@ function App() {
       [category]: newWord
     }));
     
+    // Update shown words for this category
+    setShownWords(prev => {
+      const updated = { ...prev };
+      const wasAlreadyShown = currentShownWords.includes(newWord);
+      updated[category] = wasAlreadyShown ? [newWord] : [...currentShownWords, newWord];
+      return updated;
+    });
+    
+    setIsGenerating(false);
+  }, [getRandomWord, shownWords]);
 
   const generateAllWords = useCallback(async () => {
     // Start animation
@@ -256,7 +266,7 @@ function App() {
     setTimeout(() => {
       setIsAnimating(false);
     }, 100);
-  }, [getRandomWord]);
+  }, [getRandomWord, shownWords]);
 
   const handleWordsUpdate = useCallback((updatedWords: {
     future: string[];
@@ -365,7 +375,7 @@ function App() {
           <div className="bg-gradient-to-br from-green-400 to-green-500 rounded-xl sm:rounded-3xl p-2 sm:p-4 text-white shadow-2xl lg:hover:shadow-3xl transition-all duration-300 transform lg:hover:scale-105 relative">
             {/* Refresh Icon */}
             <button
-              onClick={() => generateWord('future')}
+              onClick={() => handleCardDoubleClick('future')}
               className="absolute top-3 right-3 p-2 text-white opacity-70 hover:opacity-100 hover:bg-white/20 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/50"
               title="Generate new future word"
             >
@@ -388,7 +398,7 @@ function App() {
           <div className="bg-gradient-to-br from-red-400 to-red-500 rounded-xl sm:rounded-3xl p-2 sm:p-4 text-white shadow-2xl lg:hover:shadow-3xl transition-all duration-300 transform lg:hover:scale-105 relative">
             {/* Refresh Icon */}
             <button
-              onClick={() => generateWord('thing')}
+              onClick={() => handleCardDoubleClick('thing')}
               className="absolute top-3 right-3 p-2 text-white opacity-70 hover:opacity-100 hover:bg-white/20 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/50"
               title="Generate new thing word"
             >
@@ -411,7 +421,7 @@ function App() {
           <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl sm:rounded-3xl p-2 sm:p-4 text-white shadow-2xl lg:hover:shadow-3xl transition-all duration-300 transform lg:hover:scale-105 relative">
             {/* Refresh Icon */}
             <button
-              onClick={() => generateWord('theme')}
+              onClick={() => handleCardDoubleClick('theme')}
               className="absolute top-3 right-3 p-2 text-white opacity-70 hover:opacity-100 hover:bg-white/20 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/50"
               title="Generate new theme word"
             >
