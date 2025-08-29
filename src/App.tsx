@@ -7,13 +7,13 @@ import SettingsPage from './components/SettingsPage';
 const getDynamicTextSize = (word: string) => {
   const length = word.length;
   if (length > 20) {
-    return 'text-[20px] sm:text-[22px] md:text-[24px] lg:text-[32px]';
+    return 'text-[18px] sm:text-[20px] md:text-[22px] lg:text-[28px]';
   } else if (length > 15) {
-    return 'text-[24px] sm:text-[26px] md:text-[28px] lg:text-[36px]';
+    return 'text-[22px] sm:text-[24px] md:text-[26px] lg:text-[32px]';
   } else if (length > 10) {
-    return 'text-[28px] sm:text-[30px] md:text-[32px] lg:text-[40px]';
+    return 'text-[26px] sm:text-[28px] md:text-[30px] lg:text-[36px]';
   } else {
-    return 'text-[32px] sm:text-[34px] md:text-[36px] lg:text-[44px]';
+    return 'text-[30px] sm:text-[32px] md:text-[34px] lg:text-[40px]';
   }
 };
 
