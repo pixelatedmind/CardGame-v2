@@ -189,7 +189,7 @@ function App() {
     return selectedWord;
   }, [wordCategories]);
 
-  const handleCardDoubleClick = useCallback(async (category: keyof typeof wordCategories) => {
+  const generateWord = useCallback(async (category: keyof typeof wordCategories) => {
     setIsGenerating(true);
     
     // Add slight delay for better UX
@@ -203,6 +203,16 @@ function App() {
       [category]: newWord
     }));
     
+    // Update shown words for this category
+    setShownWords(prev => {
+      const updated = { ...prev };
+      const wasAlreadyShown = prev[category].includes(newWord);
+      updated[category] = wasAlreadyShown ? [newWord] : [...prev[category], newWord];
+      return updated;
+    });
+    
+    setIsGenerating(false);
+  }, [getRandomWord, shownWords]);
 
   const generateAllWords = useCallback(async () => {
     // Start animation
