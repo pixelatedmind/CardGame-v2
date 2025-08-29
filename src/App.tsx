@@ -37,10 +37,10 @@ const parseCSV = (csvText: string): Record<string, string[]> => {
   }
   
   const headers = lines[0].split(',');
-  const trimmedHeaders = headers.map(header => header.trim());
+  const trimmedHeaders = headers.map(header => header.trim().toLowerCase());
   console.log('Headers:', headers);
   console.log('Trimmed headers:', trimmedHeaders);
-  const categoryIndex = headers.indexOf('category');
+  const categoryIndex = trimmedHeaders.indexOf('category');
   const wordIndex = trimmedHeaders.indexOf('word');
   console.log('Category index:', categoryIndex, 'Word index:', wordIndex);
   
@@ -65,11 +65,17 @@ const parseCSV = (csvText: string): Record<string, string[]> => {
       continue;
     }
     
-    const category = values[categoryIndex];
-    const word = values[wordIndex];
+    const category = values[categoryIndex].toLowerCase();
+    const word = values[wordIndex].toUpperCase();
     
     if (!category || !word) {
       console.warn(`Line ${i} has empty category or word:`, { category, word });
+      continue;
+    }
+    
+    // Only accept valid categories
+    if (!['future', 'thing', 'theme'].includes(category)) {
+      console.warn(`Line ${i} has invalid category:`, category);
       continue;
     }
     
@@ -86,6 +92,7 @@ const parseCSV = (csvText: string): Record<string, string[]> => {
 
 function App() {
   const [wordCategories, setWordCategories] = useState<Record<string, WordCategory>>({});
+  const [defaultWordsData, setDefaultWordsData] = useState<Record<string, string[]>>({});
   const [isLoading, setIsLoading] = useState(true);
   const [currentWords, setCurrentWords] = useState({
     future: 'Loading...',
@@ -113,9 +120,9 @@ function App() {
   // Load words from CSV data
   useEffect(() => {
     const loadWords = async () => {
-      console.log('Starting to load words from public/words.csv...');
+      console.log('Starting to load words from public/words.csv/Things-DB-app.csv...');
       try {
-        const response = await fetch('/words.csv');
+        const response = await fetch('/words.csv/Things-DB-app.csv');
         
         if (!response.ok) {
           throw new Error(`Failed to fetch CSV file: ${response.status} ${response.statusText}`);
@@ -135,6 +142,9 @@ function App() {
         if (Object.keys(parsedCategories).length === 0) {
           throw new Error('No categories parsed from CSV');
         }
+        
+        // Store default words data
+        setDefaultWordsData(parsedCategories);
         
         const categories: Record<string, WordCategory> = {
           future: {
@@ -563,6 +573,7 @@ function App() {
         isOpen={showSettings}
         onClose={() => setShowSettings(false)}
         onWordsUpdate={handleWordsUpdate}
+        defaultWords={defaultWordsData}
         currentWords={{
           future: wordCategories.future?.words || [],
           thing: wordCategories.thing?.words || [],

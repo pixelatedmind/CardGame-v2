@@ -5,6 +5,7 @@ interface SettingsPageProps {
   isOpen: boolean;
   onClose: () => void;
   onWordsUpdate: (newWords: Record<string, string[]>) => void;
+  defaultWords: Record<string, string[]>;
   currentWords: Record<string, string[]>;
 }
 
@@ -18,6 +19,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({
   isOpen, 
   onClose, 
   onWordsUpdate, 
+  defaultWords,
   currentWords 
 }) => {
   const [activeTab, setActiveTab] = useState<'words' | 'appearance' | 'export'>('words');
@@ -136,8 +138,20 @@ const SettingsPage: React.FC<SettingsPageProps> = ({
 
   const resetToDefaults = () => {
     if (confirm('Are you sure you want to reset to default words? This will remove all custom words.')) {
-      // Reset to original words from the CSV
-      window.location.reload();
+      // Convert default words to WordEntry format
+      const defaultEntries: WordEntry[] = [];
+      Object.entries(defaultWords).forEach(([category, words]) => {
+        words.forEach((word, index) => {
+          defaultEntries.push({
+            id: `${category}-${index}`,
+            word,
+            category: category as 'future' | 'thing' | 'theme'
+          });
+        });
+      });
+      
+      setWordEntries(defaultEntries);
+      setHasUnsavedChanges(true);
     }
   };
 
