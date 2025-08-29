@@ -29,9 +29,6 @@ const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose, shareUrl }) =>
 
         {/* Content */}
         <div className="p-6 text-center">
-          <p className="text-gray-600 mb-6">
-            Scan the QR code to share this app
-          </p>
 
           {/* QR Code */}
           <div className="mb-6 flex justify-center">
