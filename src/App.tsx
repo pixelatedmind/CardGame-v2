@@ -1,7 +1,8 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { RefreshCw, History, Zap, Settings } from 'lucide-react';
+import { RefreshCw, History, Zap, Settings, Share2 } from 'lucide-react';
 import QRCodeSticker from './components/QRCodeSticker';
 import SettingsPage from './components/SettingsPage';
+import ShareModal from './components/ShareModal';
 
 // Helper function to get dynamic text size based on word length
 const getDynamicTextSize = (word: string) => {
@@ -103,6 +104,7 @@ function App() {
   }>>([]);
   const [isAnimating, setIsAnimating] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
   const [shownWords, setShownWords] = useState<Record<string, string[]>>({
     future: [],
     thing: [],
@@ -367,6 +369,14 @@ function App() {
   return (
     <div className="min-h-screen paper-bg p-1 sm:p-4 lg:p-8 relative">
       
+      {/* Share Button - Fixed Position */}
+      <button
+        onClick={() => setShowShareModal(true)}
+        className="fixed top-4 left-4 z-40 bg-white hover:bg-gray-50 text-gray-700 p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 border border-gray-200"
+      >
+        <Share2 className="w-5 h-5" />
+      </button>
+
       {/* Settings Button - Fixed Position */}
       <button
         onClick={() => setShowSettings(true)}
@@ -559,6 +569,13 @@ function App() {
           thing: wordCategories.thing?.words || [],
           theme: wordCategories.theme?.words || []
         }}
+      />
+      
+      {/* Share Modal */}
+      <ShareModal
+        isOpen={showShareModal}
+        onClose={() => setShowShareModal(false)}
+        shareUrl="https://eclectic-bonbon-b1e2cd.netlify.app"
       />
       </div>
     </div>
