@@ -306,6 +306,14 @@ function App() {
   return (
     <div className="min-h-screen paper-bg p-1 sm:p-4 lg:p-8 relative">
       
+      {/* Settings Button - Fixed Position */}
+      <button
+        onClick={() => setShowSettings(true)}
+        className="fixed top-4 right-4 z-40 bg-white hover:bg-gray-50 text-gray-700 p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 border border-gray-200"
+      >
+        <Settings className="w-5 h-5" />
+      </button>
+
       <div className="max-w-6xl mx-auto">
         <div className="relative z-10">
         
