@@ -51,7 +51,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({
         word: newWord.trim().toUpperCase(),
         category: newCategory
       };
-      setWordEntries(prev => [...prev, newEntry]);
+      setWordEntries(prev => [newEntry, ...prev]);
       setNewWord('');
       setHasUnsavedChanges(true);
     }
