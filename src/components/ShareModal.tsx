@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Share2, Copy } from 'lucide-react';
+import { X, Share2 } from 'lucide-react';
 
 interface ShareModalProps {
   isOpen: boolean;
@@ -8,15 +8,6 @@ interface ShareModalProps {
 }
 
 const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose, shareUrl }) => {
-  const copyToClipboard = async () => {
-    try {
-      await navigator.clipboard.writeText(shareUrl);
-      // You could add a toast notification here if desired
-    } catch (err) {
-      console.error('Failed to copy URL:', err);
-    }
-  };
-
   if (!isOpen) return null;
 
   return (
@@ -39,7 +30,7 @@ const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose, shareUrl }) =>
         {/* Content */}
         <div className="p-6 text-center">
           <p className="text-gray-600 mb-6">
-            Scan the QR code or copy the link to share this app
+            Scan the QR code to share this app
           </p>
 
           {/* QR Code */}
@@ -51,25 +42,8 @@ const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose, shareUrl }) =>
             />
           </div>
 
-          {/* URL Display and Copy */}
-          <div className="bg-gray-50 rounded-lg p-4 mb-4">
-            <div className="flex items-center justify-between gap-3">
-              <span className="text-sm text-gray-600 font-mono break-all">
-                {shareUrl}
-              </span>
-              <button
-                onClick={copyToClipboard}
-                className="flex items-center gap-2 px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium whitespace-nowrap"
-                title="Copy URL"
-              >
-                <Copy className="w-4 h-4" />
-                Copy
-              </button>
-            </div>
-          </div>
-
           <p className="text-xs text-gray-500">
-            Scan the QR code or share the link to let others use the Things from the Future card game
+            Scan the QR code to let others use the Things from the Future card game
           </p>
         </div>
       </div>
