@@ -399,7 +399,7 @@ function App() {
           </div>
 
           {/* Middle Card - Thing */}
-          <div className="bg-gradient-to-br from-red-400 to-red-500 rounded-xl sm:rounded-3xl p-2 sm:p-4 text-white shadow-2xl relative">
+          <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl sm:rounded-3xl p-2 sm:p-4 text-white shadow-2xl relative">
             {/* Refresh Icon */}
             <button
               onClick={(e) => {
@@ -416,7 +416,7 @@ function App() {
               <div className="flex-1 flex flex-col">
                 <div className="text-2xl sm:text-3xl md:text-3xl lg:text-8xl xl:text-12xl landscape:text-2xl font-medium opacity-90 mb-2 sm:mb-4 md:mb-4 lg:mb-8 landscape:mb-1">there is a</div>
                 <div className="bg-white rounded-lg sm:rounded-2xl py-2 px-1 sm:py-4 sm:px-2 md:py-3 md:px-1 lg:py-6 lg:px-3 flex-1 flex items-center justify-center landscape:py-3 landscape:px-1 shadow-lg mb-2 sm:mb-6 md:mb-4 lg:mb-16 landscape:mb-2 mt-2 sm:mt-6 md:mt-4 lg:mt-16 landscape:mt-2">
-                  <div className={`${getDynamicTextSize(currentWords.thing)} font-bold text-red-500 leading-tight break-words`}>
+                  <div className={`${getDynamicTextSize(currentWords.thing)} font-bold text-blue-500 leading-tight break-words`}>
                     {currentWords.thing}
                   </div>
                 </div>
@@ -426,7 +426,7 @@ function App() {
           </div>
 
           {/* Right Card - Theme */}
-          <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl sm:rounded-3xl p-2 sm:p-4 text-white shadow-2xl relative">
+          <div className="bg-gradient-to-br from-red-400 to-red-500 rounded-xl sm:rounded-3xl p-2 sm:p-4 text-white shadow-2xl relative">
             {/* Refresh Icon */}
             <button
               onClick={(e) => {
@@ -443,7 +443,7 @@ function App() {
               <div className="flex-1 flex flex-col">
                 <div className="text-2xl sm:text-3xl md:text-3xl lg:text-8xl xl:text-12xl landscape:text-2xl font-medium opacity-90 mb-2 sm:mb-4 md:mb-4 lg:mb-8 landscape:mb-1">related to</div>
                 <div className="bg-white rounded-lg sm:rounded-2xl py-2 px-1 sm:py-4 sm:px-2 md:py-3 md:px-1 lg:py-6 lg:px-3 flex-1 flex items-center justify-center landscape:py-3 landscape:px-1 shadow-lg mb-2 sm:mb-6 md:mb-4 lg:mb-16 landscape:mb-2 mt-2 sm:mt-6 md:mt-4 lg:mt-16 landscape:mt-2">
-                  <div className={`${getDynamicTextSize(currentWords.theme)} font-bold text-blue-500 leading-tight break-words ${isAnimating ? 'animate-pop-in' : ''}`}>
+                  <div className={`${getDynamicTextSize(currentWords.theme)} font-bold text-red-500 leading-tight break-words ${isAnimating ? 'animate-pop-in' : ''}`}>
                     {currentWords.theme}
                   </div>
                 </div>
@@ -515,11 +515,11 @@ function App() {
                           {prompt.future}
                         </span>
                         <span className="text-gray-700"> future, there is a </span>
-                        <span className="bg-red-500 text-white px-2 py-1 rounded-lg font-semibold text-sm">
+                        <span className="bg-blue-500 text-white px-2 py-1 rounded-lg font-semibold text-sm">
                           {prompt.thing}
                         </span>
                         <span className="text-gray-700"> related to </span>
-                        <span className="bg-blue-500 text-white px-2 py-1 rounded-lg font-semibold text-sm">
+                        <span className="bg-red-500 text-white px-2 py-1 rounded-lg font-semibold text-sm">
                           {prompt.theme}
                         </span>
                         <span className="text-gray-700">.</span>
