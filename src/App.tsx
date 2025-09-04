@@ -129,13 +129,13 @@ function App() {
             id: 'thing',
             label: 'Solution',
             description: 'There is a [WORD]',
-            words: parsedCategories.thing || []
+            words: parsedCategories.theme || []
           },
           theme: {
             id: 'theme',
             label: 'Focus Area',
             description: 'Related to [WORD]',
-            words: parsedCategories.theme || []
+            words: parsedCategories.thing || []
           }
         };
         
@@ -284,13 +284,13 @@ function App() {
         id: 'thing',
         label: 'Solution',
         description: 'There is a [WORD]',
-        words: updatedWords.thing
+        words: updatedWords.theme
       },
       theme: {
         id: 'theme',
         label: 'Focus Area',
         description: 'Related to [WORD]',
-        words: updatedWords.theme
+        words: updatedWords.thing
       }
     };
     
